@@ -67,13 +67,13 @@ class AdminKriteriaController extends Controller
     public function show($id)
     {
         //
-             dd($id);
+        //      dd($id);
 
-             $kriterias=Kriteria::all();
+        //      $kriterias=Kriteria::all();
 
-            $result  = DB::select('select * from kriteria where id = ?', [$id]);
-        // dd($result);
-             return view('admin.kriteria.edit',compact('kriteria','result'));
+        //     $result  = DB::select('select * from kriteria where id = ?', [$id]);
+        // // dd($result);
+        //      return view('admin.kriteria.edit',compact('kriteria','result'));
 
     }
 
@@ -84,9 +84,13 @@ class AdminKriteriaController extends Controller
      * @param  \App\Models\Kriteria  $kriteria
      * @return \Illuminate\Http\Response
      */
-    public function edit(Kriteria $kriteria)
+    public function edit($id)
     {
         //
+        // dd($id);
+        // $kriteria=product_unit::all();
+        $kriterias = DB::table('kriteria')->where('id',$id)->get();
+        return view('admin.kriteria.edit',compact('kriterias'));
     }
 
     /**
@@ -96,9 +100,29 @@ class AdminKriteriaController extends Controller
      * @param  \App\Models\Kriteria  $kriteria
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Kriteria $kriteria)
+    public function update(Request $request, $id)
     {
+        // dd($id);
         //
+
+        $request->validate([
+            'nama'=>'required',
+            'nilai'=>'required'
+        ],
+        [
+            'nama.required'=>'Nama harus diisi',
+            'nilai.required'=>'nilai harus diisi'
+
+
+        ]);
+         //aksi update
+
+        Kriteria::where('id',$id)
+            ->update([
+                'nama'=>$request->nama,
+                'nilai'=>$request->nilai
+            ]);
+            return redirect('/admin/kriteria')->with('status','Data berhasil diupdate!');
     }
 
     /**

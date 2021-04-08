@@ -171,19 +171,19 @@
                                 </li>
 
                                 <li class="">
-                                    <a href="{{url('/')}}/kriteria">
+                                    <a href="{{url('/')}}/admin/kriteria">
                                         <span class="pcoded-micon"><i class="feather icon-monitor"></i></span>
                                         <span class="pcoded-mtext">Kriteria</span>
                                     </a>
                                 </li>
                                 <li class="">
-                                    <a href="{{url('/')}}/datawarga">
+                                    <a href="{{url('/')}}/admin/datawarga">
                                         <span class="pcoded-micon"><i class="feather icon-users"></i></span>
                                         <span class="pcoded-mtext">Data Warga</span>
                                     </a>
                                 </li>
                                 <li class="">
-                                    <a href="{{url('/')}}/bantuan">
+                                    <a href="{{url('/')}}/admin/bantuan">
                                         <span class="pcoded-micon"><i class="feather icon-codepen"></i></span>
                                         <span class="pcoded-mtext">Bantuan</span>
                                     </a>
