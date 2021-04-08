@@ -16,3 +16,25 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
+    return view('dashboard');
+})->name('dashboard');
+
+//halaman admin fixed
+Route::group(['middleware' => ['auth:sanctum', 'verified']], function() {
+
+    Route::resource('admin/kriteria','App\Http\Controllers\AdminKriteriaController');
+    // Route::get('/kriteria', function () {
+    //     return view('admin.kriteria.index');
+    // })->name('admin_kriteria');
+});
+
+// Route::resource('admin/tagihansiswas','App\Http\Controllers\AdminTagihanSiswaController')->except([
+//     'index'
+// ]);
+
+//hal admin sementara
+Route::get('/dashboard2', function () {
+    return view('admin.dashboard');
+})->name('admin_dashboard');
