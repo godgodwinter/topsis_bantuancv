@@ -18,13 +18,18 @@
 @endsection
 @section('headernav')
 
+{{-- {{dd($kriterias)}} --}}
+@foreach ($kriterias as $kriteria)
+@endforeach
+
+{{-- {{dd($kriteria)}} --}}
 <div class="page-header">
     <div class="row align-items-end">
         <div class="col-lg-8">
             <div class="page-header-title">
                 <div class="d-inline">
-                    <h4>@yield('title')</h4>
-                    <span>Halaman Mastering @yield('title')</span>
+                    <h4>{{$kriteria->nama}} - {{$kriteria->nilai}}</h4>
+                    <span>Halaman Mastering @yield('title') </span> > Setting Range
                 </div>
             </div>
         </div>
@@ -57,9 +62,11 @@
 <!-- Section start -->
 <div class="page-body">
     <!-- DOM/Jquery table start -->
+
+    <!-- DOM/Jquery table end -->
+    <!-- tambah -->
     <div class="card">
         <div class="card-header">
-            <h5>Data @yield('title')</h5>
         </div>
         <div class="card-block">
             <div class="table-responsive dt-responsive">
@@ -67,28 +74,42 @@
                     <thead>
                         <tr>
                             <th>No</th>
-                            <th>Nama Kriteria</th>
-                            <th>Nilai</th>
+                            <th>Range</th>
+                            <th>bobot</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($kriterias as $kriteria)
+                        @foreach ($setting_ranges as $sr)
 
 
                         <tr>
                             <td>{{ ($loop->index)+1 }} </td>
-                            <td>{{$kriteria->nama}}</td>
-                            <td>{{$kriteria->nilai}}</td>
+                            <td>
+                                <?php
+                                if ($sr->tanda=="Diantara"){
+                                    ?>
+                                   Diantara {{$sr->nilai1}} sampai {{$sr->nilai2}}
+                                    <?php
+                                }elseif($sr->tanda=="Kurang dari sama dengan"){
+                                    ?>
+                                    Kurang dari sama dengan {{$sr->nilai1}}
+                                    <?php
+                                }else {
+                                   ?>
+                                    Lebih dari sama dengan {{$sr->nilai1}}
+                                   <?php
+                                }
+                                ?>
+                            </td>
+                            <td>{{$sr->bobot}}</td>
 
                             <td>
-                                <a class="btn btn-info btn-outline-info"
-                                    href="/admin/settingrange/{{$kriteria->id}}"><span class="pcoded-micon"> <i
-                                            class="feather icon-edit"></i>Detail</span></a>
+
                                 <a class="btn btn-warning btn-outline-warning"
-                                    href="/admin/kriteria/{{$kriteria->id}}/edit"><span class="pcoded-micon"> <i
+                                    href="/admin/settingrange/{{$sr->id}}/edit"><span class="pcoded-micon"> <i
                                             class="feather icon-edit"></i></span></a>
-                                <form action="/admin/kriteria/{{$kriteria->id}}" method="post" class="d-inline">
+                                <form action="/admin/settingrange/{{$sr->id}}/{{$sr->kriteria_id}}" method="post" class="d-inline">
                                     @method('delete')
                                     @csrf
                                     <button class="btn btn-danger btn-outline-warning"
@@ -103,8 +124,8 @@
                         <tr>
                             <th>No</th>
 
-                            <th>Nama Kriteria</th>
-                            <th>Nilai</th>
+                            <th>Range</th>
+                            <th>Bobot</th>
                             <th>Aksi</th>
                         </tr>
                     </tfoot>
@@ -112,41 +133,65 @@
             </div>
         </div>
     </div>
-    <!-- DOM/Jquery table end -->
     <!-- tambah -->
     <div class="card">
         <div class="card-block">
             <div class="card-body">
-                <form action="/admin/kriteria " method="post">
+                <form action="/admin/settingrange " method="post">
                     @csrf
-                    <h5>Tambah @yield('title')</h5>
-                    <span>&nbsp; </span>
+                    <h5>Tambah Range</h5>
+                    <span>**) Jika memilih Kurang dari atau lebih dari kosongkan inputan nilai 2 </span>
                     <div class="pl-lg-4">
                         <div class="row">
                             <div class="col-lg-6">
                                 <div class="form-group">
-                                    <label class="form-control-label" for="input-nama">Nama Kriteria (*</label>
-                                    <input type="text" name="nama" id="input-nama"
-                                        class="form-control form-control-alternative  @error('nama') is-invalid @enderror"
-                                        placeholder="Contoh : Tanggungan Keluarga " value="{{old('nama')}}" required>
-                                    @error('nama')<div class="invalid-feedback"> {{$message}}</div>
+                                    <label class="form-control-label" for="input-nilai1">Nilai 1  (*</label>
+                                    <input type="hidden" name="kriteria_id" value="{{ $kriteria->id }}">
+                                    <input type="text" name="nilai1" id="input-nilai1"
+                                        class="form-control form-control-alternative  @error('nilai1') is-invalid @enderror"
+                                        placeholder="Contoh : 1 " value="{{old('nilai1')}}" required>
+                                    @error('nilai1')<div class="invalid-feedback"> {{$message}}</div>
                                     @enderror
                                 </div>
                             </div>
-
 
                             <div class="col-lg-6">
                                 <div class="form-group">
-                                    <label class="form-control-label" for="input-telp">nilai *)</label>
-                                    <input type="text" name="nilai" id="input-telp"
-                                        class="form-control form-control-alternative  @error('nilai') is-invalid @enderror"
-                                        placeholder="Contoh : 5 " value="{{old('nilai')}}" required>
-                                    @error('nilai')<div class="invalid-feedback"> {{$message}}</div>
+                                    <label class="form-control-label" for="input-nilai2">Nilai 2  (*</label>
+                                    <input type="text" name="nilai2" id="input-nilai2"
+                                        class="form-control form-control-alternative  @error('nilai2') is-invalid @enderror"
+                                        placeholder="Contoh : 5 " value="{{old('nilai2')}}" >
+                                    @error('nilai2')<div class="invalid-feedback"> {{$message}}</div>
                                     @enderror
                                 </div>
                             </div>
 
 
+
+                            <div class="col-lg-6 col-sm-6 col-xl-6 m-b-30">
+                                <label class="form-control-label" for="input-tanda">Pilih Jenis Range  (*</label>
+                                <select name="tanda" id="input-tanda"
+                                    class="form-control form-control-info  @error('tanda') is-invalid @enderror"
+                                    required>
+
+                                    <option>Diantara</option>
+                                    <option>Kurang dari sama dengan</option>
+                                    <option>Lebih dari sama dengan</option>
+                                </select> @error('tanda')<div class="invalid-feedback"> {{$message}}
+                                </div>
+                                @enderror
+                            </div>
+
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="input-bobot">Bobot  (*</label>
+                                    <input type="text" name="bobot" id="input-bobot"
+                                        class="form-control form-control-alternative  @error('bobot') is-invalid @enderror"
+                                        placeholder="Contoh : 4" value="{{old('bobot')}}" required>
+                                    @error('bobot')<div class="invalid-feedback"> {{$message}}</div>
+                                    @enderror
+                                </div>
+                            </div>
 
                         </div>
                     </div>

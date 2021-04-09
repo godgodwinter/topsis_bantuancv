@@ -29,6 +29,19 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function() {
     Route::resource('admin/datawarga','App\Http\Controllers\AdminDatawargaController');
 
     Route::resource('admin/bantuan','App\Http\Controllers\AdminBantuanController');
+
+
+    Route::resource('admin/settingrange','App\Http\Controllers\AdminSettingrangeController');
+
+    Route::delete('admin/settingrange/{id}/{kriteriaid}', 'App\Http\Controllers\AdminSettingrangeController@destroy');
+
+
+    Route::resource('admin/dataproses','App\Http\Controllers\AdminDataprosesController');
+
+    Route::get('admin/dataproses/{id}/addwarga', 'App\Http\Controllers\AdminDataprosesController@addwarga');
+
+    Route::post('admin/dataproses/addwarga/store', 'App\Http\Controllers\AdminDataprosesController@addwargastore');
+
     // Route::get('/kriteria', function () {
     //     return view('admin.kriteria.index');
     // })->name('admin_kriteria');

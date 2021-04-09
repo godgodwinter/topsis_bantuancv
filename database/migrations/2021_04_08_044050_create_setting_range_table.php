@@ -16,8 +16,11 @@ class CreateSettingRangeTable extends Migration
         Schema::create('setting_range', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('kriteria_id')->index();
-            $table->string('range_nilai')->nullable();
+            $table->string('tanda')->nullable();
+            $table->string('nilai1')->nullable();
+            $table->string('nilai2')->nullable();
             $table->string('bobot')->nullable();
+            $table->string('tipe')->nullable();
             $table->timestamps();
         });
     }

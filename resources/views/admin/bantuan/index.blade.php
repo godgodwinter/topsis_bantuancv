@@ -82,6 +82,9 @@
                             <td>{{$data->status}}</td>
 
                             <td>
+                                <a class="btn btn-info btn-outline-info"
+                                href="/admin/dataproses/{{$data->id}}"><span class="pcoded-micon"> <i
+                                        class="feather icon-edit"></i>Detail</span></a>
                                 <a class="btn btn-warning btn-outline-warning"
                                     href="/admin/bantuan/{{$data->id}}/edit"><span class="pcoded-micon"> <i
                                             class="feather icon-edit"></i></span></a>

@@ -5,16 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class setting_range extends Model
+class data_proses extends Model
 {
-    public $table = "setting_range";
+    public $table = "data_proses";
     use HasFactory;
 
     protected $fillable = [
-        'kriteria_id',
-        'tanda',
-        'nilai1',
-        'nilai2',
-        'bobot'
+        'nik',
+        'th_penerimaan_id',
+        'nilai'
     ];
 }
