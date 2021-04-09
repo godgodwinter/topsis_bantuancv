@@ -17,6 +17,7 @@ class CreateThPenerimaanTable extends Migration
             $table->id();
             $table->string('tahun')->nullable();
             $table->string('status')->nullable();
+            $table->string('kuota')->nullable();
             $table->timestamps();
         });
     }
