@@ -85,12 +85,12 @@ $kriterias = DB::table('kriteria')->where('id',$data->kriteria_id)->get();
                     @method('put')
                     @csrf
                     <h5>Edit Range</h5>
-                    <span>**) Jika memilih Kurang dari atau lebih dari kosongkan inputan nilai 2 </span>
+                    {{-- <span>**) Jika memilih Kurang dari atau lebih dari kosongkan inputan nilai 2 </span> --}}
                     <div class="pl-lg-4">
                         <div class="row">
                             <div class="col-lg-6">
                                 <div class="form-group">
-                                    <label class="form-control-label" for="input-nilai1">Nilai 1  (*</label>
+                                    <label class="form-control-label" for="input-nilai1">Nilai (*</label>
                                     <input type="hidden" name="kriteria_id" value="{{ $data->kriteria_id }}">
                                     <input type="text" name="nilai1" id="input-nilai1"
                                         class="form-control form-control-alternative  @error('nilai1') is-invalid @enderror"
@@ -100,7 +100,7 @@ $kriterias = DB::table('kriteria')->where('id',$data->kriteria_id)->get();
                                 </div>
                             </div>
 
-                            <div class="col-lg-6">
+                            {{-- <div class="col-lg-6">
                                 <div class="form-group">
                                     <label class="form-control-label" for="input-nilai2">Nilai 2  (*</label>
                                     <input type="text" name="nilai2" id="input-nilai2"
@@ -109,11 +109,11 @@ $kriterias = DB::table('kriteria')->where('id',$data->kriteria_id)->get();
                                     @error('nilai2')<div class="invalid-feedback"> {{$message}}</div>
                                     @enderror
                                 </div>
-                            </div>
+                            </div> --}}
 
 
 
-                            <div class="col-lg-6 col-sm-6 col-xl-6 m-b-30">
+                            {{-- <div class="col-lg-6 col-sm-6 col-xl-6 m-b-30">
                                 <label class="form-control-label" for="input-tanda">Pilih Jenis Range  (*</label>
                                 <select name="tanda" id="input-tanda"
                                     class="form-control form-control-info  @error('tanda') is-invalid @enderror"
@@ -126,7 +126,7 @@ $kriterias = DB::table('kriteria')->where('id',$data->kriteria_id)->get();
                                 </select> @error('tanda')<div class="invalid-feedback"> {{$message}}
                                 </div>
                                 @enderror
-                            </div>
+                            </div> --}}
 
                             <div class="col-lg-6">
                                 <div class="form-group">

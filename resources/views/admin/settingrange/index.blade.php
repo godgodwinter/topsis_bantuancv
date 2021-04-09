@@ -85,8 +85,8 @@
 
                         <tr>
                             <td>{{ ($loop->index)+1 }} </td>
-                            <td>
-                                <?php
+                            <td> {{ $sr->nilai1 }}
+                                {{-- <?php
                                 if ($sr->tanda=="Diantara"){
                                     ?>
                                    Diantara {{$sr->nilai1}} sampai {{$sr->nilai2}}
@@ -100,7 +100,7 @@
                                     Lebih dari sama dengan {{$sr->nilai1}}
                                    <?php
                                 }
-                                ?>
+                                ?> --}}
                             </td>
                             <td>{{$sr->bobot}}</td>
 
@@ -140,12 +140,12 @@
                 <form action="/admin/settingrange " method="post">
                     @csrf
                     <h5>Tambah Range</h5>
-                    <span>**) Jika memilih Kurang dari atau lebih dari kosongkan inputan nilai 2 </span>
+                    {{-- <span>**) Jika memilih Kurang dari atau lebih dari kosongkan inputan nilai 2 </span> --}}
                     <div class="pl-lg-4">
                         <div class="row">
                             <div class="col-lg-6">
                                 <div class="form-group">
-                                    <label class="form-control-label" for="input-nilai1">Nilai 1  (*</label>
+                                    <label class="form-control-label" for="input-nilai1">Nilai (*</label>
                                     <input type="hidden" name="kriteria_id" value="{{ $kriteria->id }}">
                                     <input type="text" name="nilai1" id="input-nilai1"
                                         class="form-control form-control-alternative  @error('nilai1') is-invalid @enderror"
@@ -155,7 +155,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-lg-6">
+                            {{-- <div class="col-lg-6">
                                 <div class="form-group">
                                     <label class="form-control-label" for="input-nilai2">Nilai 2  (*</label>
                                     <input type="text" name="nilai2" id="input-nilai2"
@@ -180,7 +180,7 @@
                                 </select> @error('tanda')<div class="invalid-feedback"> {{$message}}
                                 </div>
                                 @enderror
-                            </div>
+                            </div> --}}
 
                             <div class="col-lg-6">
                                 <div class="form-group">

@@ -41,14 +41,14 @@ class AdminSettingrangeController extends Controller
         //
         // dd($request);
         $request->validate([
-            'tanda'=>'required',
+            // 'tanda'=>'required',
             'kriteria_id'=>'required',
             'nilai1'=>'required',
             'bobot'=>'required'
 
         ],
         [
-            'tanda.required'=>'tanda harus diisi',
+            // 'tanda.required'=>'tanda harus diisi',
             'nik.unique'=>'nik sudah digunakan',
             'kriteria_id.unique'=>'kriteria_id sudah digunakan',
             'nilai1.required'=>'nilai1 harus diisi',
@@ -104,13 +104,13 @@ class AdminSettingrangeController extends Controller
         //
 
         $request->validate([
-            'tanda'=>'required',
+            // 'tanda'=>'required',
             'kriteria_id'=>'required',
             'nilai1'=>'required',
             'bobot'=>'required'
         ],
         [
-            'tanda.required'=>'tanda harus diisi',
+            // 'tanda.required'=>'tanda harus diisi',
             'nik.unique'=>'nik sudah digunakan',
             'kriteria_id.unique'=>'kriteria_id sudah digunakan',
             'nilai1.required'=>'nilai1 harus diisi',
