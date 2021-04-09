@@ -100,9 +100,40 @@
                                 @foreach($kriterias as $kriteria)
                                     <td>
                                         <!-- Tombal Modal -->
-                                        <button type="button" class="btn btn-primary" data-toggle="modal"
+                                        <button type="button" class="btn btn-primary btn-outline-primary" data-toggle="modal"
                                             data-target="#Modalnik{{ $data_proses->id }}kriteria{{ $kriteria->id }}">
-                                            Isi Data
+                                               {{-- $datasettingrange = DB::select('select * from setting_range where kriteria_id = ?', array($kriteria->id)); --}}
+                                                    <?php
+                                                       $cari = $cari = DB::table('data_proses_detail')
+ ->where('nik', '=', $data_proses->nik)
+ ->where('th_penerimaan_id', '=', $th_penerimaan->id)
+ ->where('kriteria_id', '=', $kriteria->id)
+ ->count();
+//  dd($cari);
+if($cari<1){
+    echo" Isi Data";
+    $data_proses_detail_id=0;
+}else{
+    //ambil id setting range pada table data proses detail
+    $ambildataprosesdetail = DB::table('data_proses_detail')
+ ->where('nik', '=', $data_proses->nik)
+ ->where('th_penerimaan_id', '=', $th_penerimaan->id)
+ ->where('kriteria_id', '=', $kriteria->id)->first();
+
+        // dd($ambildataprosesdetail);
+        $data_proses_detail_id=$ambildataprosesdetail->id;
+        $sr_id=$ambildataprosesdetail->setting_range_id;
+                                                    // echo $sr_id;
+
+        $ambilsetting_range= DB::table('setting_range')
+ ->where('id', '=', $sr_id)->first();
+
+        // dd($ambilsetting_range);
+        $dataaslitersimpan=$ambilsetting_range->nilai1;
+
+             echo $dataaslitersimpan;
+}
+?>
                                         </button>
                                     </td>
 
@@ -126,6 +157,8 @@
                                                     <form action="/admin/dataproses/isidata/add " method="post">
                                                         @csrf
 
+                                                        <input type="hidden" name="data_proses_detail_id"
+                                                            value="{{ $data_proses_detail_id }}">
                                                         <input type="hidden" name="th_penerimaan_id"
                                                             value="{{ $th_penerimaan->id }}">
                                                         <input type="hidden" name="nik"
@@ -134,10 +167,10 @@
                                                             value="{{ $kriteria->id }}">
 
                                                         <div class="col-lg-6 col-sm-6 col-xl-6 m-b-30">
-                                                            <label class="form-control-label" for="input-status">Pilih
+                                                            <label class="form-control-label" for="input-setting_range_id">Pilih
                                                                 Data (*</label>
-                                                            <select name="status" id="input-status"
-                                                                class="form-control form-control-info  @error('status') is-invalid @enderror"
+                                                            <select name="setting_range_id" id="input-setting_range_id"
+                                                                class="form-control form-control-info  @error('setting_range_id') is-invalid @enderror"
                                                                 required>
 
                                                                 {{-- <option>{{ $kriteria->id }}</option> --}}
@@ -148,7 +181,7 @@
                                                         // $sr_nilai=$ambil->nilai1;
                                                         ?>
 
-                                                    <option>{{ $ambil->nilai1 }}</option>
+                                                    <option value="{{ $ambil->id }}">{{ $ambil->nilai1 }}</option>
                                                         <?php
                                                     }
                                         ?>
@@ -157,7 +190,7 @@
 
                                                     <option>{{ $kriteria->id }}</option>
                                 @endforeach--}}
-                                </select> @error('status')<div class="invalid-feedback"> {{ $message }}
+                                </select> @error('setting_range_id')<div class="invalid-feedback"> {{ $message }}
                                 </div>
                         @enderror
             </div>

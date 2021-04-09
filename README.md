@@ -144,6 +144,9 @@ This is an example of how to list things you need to use the software and how to
    php artisan db:seed --class=Kriteriaseeder   //untuk meload data kriteria dan range nya
    ```
 
+   ```sh
+    php artisan db:seed --class=tahunSeeder   //untuk meload data tahun penerimaan
+   ```
 
 <!-- USAGE EXAMPLES -->
 ## Usage

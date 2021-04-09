@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\data_proses;
+use App\Models\data_proses_detail;
 use App\Models\data_warga;
 use App\Models\Kriteria;
 use Illuminate\Http\Request;
@@ -130,5 +131,47 @@ class AdminDataprosesController extends Controller
         }else{
             return redirect(URL::to('/').'/admin/dataproses/'.$request->th_penerimaan_id)->with('status','Gagal !! Data Warga pernah di tambahkan! ');
         }
+}
+public function addisidata (Request $request)
+{
+    //
+    // dd($request);
+
+    $datasettingrange = DB::select('select * from setting_range where id = ?', array($request->setting_range_id));
+    foreach ($datasettingrange as $ambil) {
+        $bobot_sr=$ambil->bobot;
+    }
+// dd($bobot_sr);
+    //cek apakah data proses detail sudah ada di tahun tersebut
+    $cari = DB::table('data_proses_detail')
+ ->where('nik', '=', $request->nik)
+ ->where('th_penerimaan_id', '=', $request->th_penerimaan_id)
+ ->where('kriteria_id', '=', $request->kriteria_id)
+ ->count();
+
+    // dd($warga_count);
+   if($cari<1){
+    // data_proses_detail::create($request->all());
+
+//jalankan simpan
+    data_proses_detail::create([
+        'nik' => $request->nik,
+        'th_penerimaan_id' => $request->th_penerimaan_id,
+        'kriteria_id' => $request->kriteria_id,
+        'setting_range_id' => $request->setting_range_id,
+        'bobot_sr' => $bobot_sr
+    ]);
+
+        return redirect(URL::to('/').'/admin/dataproses/'.$request->th_penerimaan_id)->with('status','Data berhasil di tambahkan!');
+    }else{
+
+//jalankan update
+data_proses_detail::where('id',$request->data_proses_detail_id)
+->update([
+    'setting_range_id'=>$request->setting_range_id,
+    'bobot_sr'=>$bobot_sr
+]);
+        return redirect(URL::to('/').'/admin/dataproses/'.$request->th_penerimaan_id)->with('status','DataSudah di ubah! ');
+    }
 }
 }

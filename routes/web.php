@@ -42,6 +42,8 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function() {
 
     Route::post('admin/dataproses/addwarga/store', 'App\Http\Controllers\AdminDataprosesController@addwargastore');
 
+    Route::post('admin/dataproses/isidata/add', 'App\Http\Controllers\AdminDataprosesController@addisidata');
+
     // Route::get('/kriteria', function () {
     //     return view('admin.kriteria.index');
     // })->name('admin_kriteria');
