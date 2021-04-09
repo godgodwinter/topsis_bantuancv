@@ -25,6 +25,10 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
 Route::group(['middleware' => ['auth:sanctum', 'verified']], function() {
 
     Route::resource('admin/kriteria','App\Http\Controllers\AdminKriteriaController');
+
+    Route::resource('admin/datawarga','App\Http\Controllers\AdminDatawargaController');
+
+    Route::resource('admin/bantuan','App\Http\Controllers\AdminBantuanController');
     // Route::get('/kriteria', function () {
     //     return view('admin.kriteria.index');
     // })->name('admin_kriteria');

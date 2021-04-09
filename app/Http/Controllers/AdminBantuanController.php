@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\th_penerimaan;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\URL;
 
 class AdminBantuanController extends Controller
 {
@@ -14,6 +16,9 @@ class AdminBantuanController extends Controller
      */
     public function index()
     {
+        $datas=th_penerimaan::all();
+
+        return view('admin.bantuan.index',compact('datas'));
         //
     }
 
@@ -36,6 +41,20 @@ class AdminBantuanController extends Controller
     public function store(Request $request)
     {
         //
+        $request->validate([
+            'tahun'=>'required|unique:th_penerimaan',
+            'status'=>'required'
+
+        ],
+        [
+            'tahun.required'=>'tahun harus diisi',
+            'tahun.unique'=>'tahun sudah digunakan',
+            'status.required'=>'status harus diisi'
+
+        ]);
+            // dd($request);
+        th_penerimaan::create($request->all());
+        return redirect(URL::to('/').'/admin/bantuan')->with('status','Data berhasil di tambahkan!');
     }
 
     /**
@@ -55,9 +74,11 @@ class AdminBantuanController extends Controller
      * @param  \App\Models\th_penerimaan  $th_penerimaan
      * @return \Illuminate\Http\Response
      */
-    public function edit(th_penerimaan $th_penerimaan)
+    public function edit($id)
     {
         //
+        $datas = DB::table('th_penerimaan')->where('id',$id)->get();
+        return view('admin.bantuan.edit',compact('datas'));
     }
 
     /**
@@ -67,9 +88,28 @@ class AdminBantuanController extends Controller
      * @param  \App\Models\th_penerimaan  $th_penerimaan
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, th_penerimaan $th_penerimaan)
+    public function update(Request $request, $id)
     {
         //
+
+        $request->validate([
+            'tahun'=>'required',
+            'status'=>'required'
+        ],
+        [
+            'tahun.required'=>'tahun harus diisi',
+            'status.required'=>'status harus diisi'
+
+
+        ]);
+         //aksi update
+
+        th_penerimaan::where('id',$id)
+            ->update([
+                'tahun'=>$request->tahun,
+                'status'=>$request->status
+            ]);
+            return redirect('/admin/bantuan')->with('status','Data berhasil diupdate!');
     }
 
     /**
@@ -78,8 +118,10 @@ class AdminBantuanController extends Controller
      * @param  \App\Models\th_penerimaan  $th_penerimaan
      * @return \Illuminate\Http\Response
      */
-    public function destroy(th_penerimaan $th_penerimaan)
+    public function destroy($id)
     {
-        //
+
+        th_penerimaan::destroy($id);
+        return redirect(URL::to('/').'/admin/bantuan')->with('status','Data berhasil dihapus!');
     }
 }

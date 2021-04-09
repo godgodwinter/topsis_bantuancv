@@ -7,5 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class data_warga extends Model
 {
+    public $table = "data_warga";
     use HasFactory;
+
+    protected $fillable = [
+        'nik',
+        'nama',
+        'alamat',
+        'jk',
+        'hp'
+    ];
 }
