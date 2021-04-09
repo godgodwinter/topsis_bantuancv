@@ -43,11 +43,13 @@ class AdminBantuanController extends Controller
         //
         $request->validate([
             'tahun'=>'required|unique:th_penerimaan',
+            'kuota'=>'required',
             'status'=>'required'
 
         ],
         [
             'tahun.required'=>'tahun harus diisi',
+            'kuota.required'=>'kuota harus diisi',
             'tahun.unique'=>'tahun sudah digunakan',
             'status.required'=>'status harus diisi'
 
@@ -94,10 +96,12 @@ class AdminBantuanController extends Controller
 
         $request->validate([
             'tahun'=>'required',
+            'kuota'=>'required',
             'status'=>'required'
         ],
         [
             'tahun.required'=>'tahun harus diisi',
+            'kuota.required'=>'kuota harus diisi',
             'status.required'=>'status harus diisi'
 
 
@@ -107,6 +111,7 @@ class AdminBantuanController extends Controller
         th_penerimaan::where('id',$id)
             ->update([
                 'tahun'=>$request->tahun,
+                'kuota'=>$request->kuota,
                 'status'=>$request->status
             ]);
             return redirect('/admin/bantuan')->with('status','Data berhasil diupdate!');

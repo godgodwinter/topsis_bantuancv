@@ -68,6 +68,7 @@
                         <tr>
                             <th>No</th>
                             <th>Tahun</th>
+                            <th>Kuota</th>
                             <th>Status</th>
                             <th>Aksi</th>
                         </tr>
@@ -79,6 +80,7 @@
                         <tr>
                             <td>{{ ($loop->index)+1 }} </td>
                             <td>{{$data->tahun}}</td>
+                            <td>{{$data->kuota}}</td>
                             <td>{{$data->status}}</td>
 
                             <td>
@@ -103,6 +105,7 @@
                         <tr>
                             <th>No</th>
                             <th>Tahun</th>
+                            <th>Kuota</th>
                             <th>Status</th>
                             <th>Aksi</th>
                         </tr>
@@ -129,6 +132,16 @@
                                         class="form-control form-control-alternative  @error('tahun') is-invalid @enderror"
                                         placeholder="Contoh : 2021 " value="{{old('tahun')}}" required>
                                     @error('tahun')<div class="invalid-feedback"> {{$message}}</div>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="input-kuota">Kuota  (*</label>
+                                    <input type="text" name="kuota" id="input-kuota"
+                                        class="form-control form-control-alternative  @error('kuota') is-invalid @enderror"
+                                        placeholder="Contoh : 20 " value="{{old('kuota')}}" required>
+                                    @error('kuota')<div class="invalid-feedback"> {{$message}}</div>
                                     @enderror
                                 </div>
                             </div>

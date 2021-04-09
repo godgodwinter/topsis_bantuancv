@@ -84,6 +84,16 @@
                             </div>
 
 
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="input-kuota">Kuota  (*</label>
+                                    <input type="text" name="kuota" id="input-kuota"
+                                        class="form-control form-control-alternative  @error('kuota') is-invalid @enderror"
+                                        placeholder="Contoh : 20 " value="{{$data->kuota}}" required>
+                                    @error('kuota')<div class="invalid-feedback"> {{$message}}</div>
+                                    @enderror
+                                </div>
+                            </div>
                             <div class="col-lg-6 col-sm-6 col-xl-6 m-b-30">
                                 <label class="form-control-label" for="input-status">Pilih Status (*</label>
                                 <select name="status" id="input-status"

@@ -34,7 +34,7 @@ class CreateDataProsesTable extends Migration
             //                                 ->onDelete('cascade ')
             //                                 ->onUpdate('cascade');
 
-            $table->string('nilai')->nullable();
+            $table->string('hasil_topsis')->nullable();
             $table->timestamps();
         });
     }

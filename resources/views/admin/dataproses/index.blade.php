@@ -18,15 +18,15 @@
 @endsection
 @section('headernav')
 
-{{-- {{dd($kriterias)}} --}}
+{{-- {{dd($kriterias) }} --}}
 
 
-@foreach ($data_wargas as $data_warga)
+@foreach($data_wargas as $data_warga)
 @endforeach
-@foreach ($th_penerimaans as $th_penerimaan)
+@foreach($th_penerimaans as $th_penerimaan)
 @endforeach
 
-{{-- {{dd($kriteria)}} --}}
+{{-- {{dd($kriteria) }} --}}
 <div class="page-header">
     <div class="row align-items-end">
         <div class="col-lg-8">
@@ -52,13 +52,13 @@
 @endsection
 
 @section('notif')
-@if (session('status'))
-<div class="alert alert-info border-info">
-    {{ session('status') }} <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
-            class="pcoded-micon"> <i class="feather icon-x-square"></i></span>
-        <span aria-hidden="true">&times;</span>
-    </button>
-</div>
+@if(session('status'))
+    <div class="alert alert-info border-info">
+        {{ session('status') }} <button type="button" class="close" data-dismiss="alert"
+            aria-label="Close"><span class="pcoded-micon"> <i class="feather icon-x-square"></i></span>
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
 @endif
 @endsection
 
@@ -71,7 +71,7 @@
     <!-- tambah -->
     <div class="card">
         <div class="cointainer"> <a class="btn btn-success btn-outline-success"
-                href="/admin/dataproses/{{$th_penerimaan->id}}/addwarga"><span class="pcoded-micon"> <i
+                href="/admin/dataproses/{{ $th_penerimaan->id }}/addwarga"><span class="pcoded-micon"> <i
                         class="feather icon-edit"></i>Tambah Calon Penerima Bantuan</span></a></div>
     </div>
     <div class="card">
@@ -84,71 +84,125 @@
                     <thead>
                         <tr>
                             <th>No</th>
-                            @foreach ($kriterias as $kriteria)
-                            <th>{{ $kriteria->nama }}</th>
+                            <th>NIK</th>
+                            @foreach($kriterias as $kriteria)
+                                <th>{{ $kriteria->nama }}</th>
                             @endforeach
                         </tr>
                     </thead>
                     <tbody>
                         {{-- data warga --}}
-                        @foreach ($data_prosess as $data_proses)
-                        <tr>
-                            <td>{{ $data_proses->nik }}</td>
+                        @foreach($data_prosess as $data_proses)
+                            <tr>
+                                <td>{{ ($loop->index)+1 }} </td>
+                                <td>{{ $data_proses->nik }}</td>
                                 {{-- data warga diulang perkriteria --}}
-                            @foreach ($kriterias as $kriteria)
-                            <td>  <!-- Button trigger modal -->
-                                <button type="button" class="btn btn-primary" data-toggle="modal"
-                                    data-target="#Modalnik{{ $data_proses->id }}kriteria{{ $kriteria->id }}">
-                                    Isi Data {{ $data_proses->nik }} - {{ $kriteria->nama }}
-                                </button>
-                                 </td>
-
-
-                            <!-- Modal -->
-                            <div class="modal fade" id="Modalnik{{ $data_proses->id }}kriteria{{ $kriteria->id }}" tabindex="-1" role="dialog"
-                            aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">Modal title  {{ $data_proses->nik }} - {{ $kriteria->nama }}</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
+                                @foreach($kriterias as $kriteria)
+                                    <td>
+                                        <!-- Tombal Modal -->
+                                        <button type="button" class="btn btn-primary" data-toggle="modal"
+                                            data-target="#Modalnik{{ $data_proses->id }}kriteria{{ $kriteria->id }}">
+                                            Isi Data
                                         </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        ...
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary"
-                                            data-dismiss="modal">Close</button>
-                                        <button type="button" class="btn btn-primary">Save changes</button>
-                                    </div>
+                                    </td>
+
+
+                                    <!-- Modal Tambah -->
+                                    <div class="modal fade"
+                                        id="Modalnik{{ $data_proses->id }}kriteria{{ $kriteria->id }}" tabindex="-1"
+                                        role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel">Modal title
+                                                        {{ $data_proses->nik }} - {{ $kriteria->nama }}</h5>
+                                                    <button type="button" class="close" data-dismiss="modal"
+                                                        aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+
+                                                    <form action="/admin/dataproses/isidata/add " method="post">
+                                                        @csrf
+
+                                                        <input type="hidden" name="th_penerimaan_id"
+                                                            value="{{ $th_penerimaan->id }}">
+                                                        <input type="hidden" name="nik"
+                                                            value="{{ $data_proses->nik }}">
+                                                        <input type="hidden" name="kriteria_id"
+                                                            value="{{ $kriteria->id }}">
+
+                                                        <div class="col-lg-6 col-sm-6 col-xl-6 m-b-30">
+                                                            <label class="form-control-label" for="input-status">Pilih
+                                                                Data (*</label>
+                                                            <select name="status" id="input-status"
+                                                                class="form-control form-control-info  @error('status') is-invalid @enderror"
+                                                                required>
+
+                                                                {{-- <option>{{ $kriteria->id }}</option> --}}
+                                    <?php
+                                        $datasettingrange = DB::select('select * from setting_range where kriteria_id = ?', array($kriteria->id));
+                                                    foreach ($datasettingrange as $ambil) {
+                                                        // dd($ambil);
+                                                        // $sr_nilai=$ambil->nilai1;
+                                                        ?>
+
+                                                    <option>{{ $ambil->nilai1 }}</option>
+                                                        <?php
+                                                    }
+                                        ?>
+                                                                {{-- @foreach ($kriterias as $kriteria)
+
+
+                                                    <option>{{ $kriteria->id }}</option>
+                                @endforeach--}}
+                                </select> @error('status')<div class="invalid-feedback"> {{ $message }}
                                 </div>
-                            </div>
-                        </div>
-
-                            @endforeach
-
-
-
-
-
-
-                        </tr>
-                        @endforeach
-                    </tbody>
-                    <tfoot>
-                        <tr>
-                            <th>No</th>
-                            @foreach ($kriterias as $kriteria)
-                            <th>{{ $kriteria->nama }}</th>
-                            @endforeach
-                        </tr>
-                    </tfoot>
-                </table>
+                        @enderror
             </div>
+
+
+            {{-- <input type="hidden" name="nik" value="{{ $data->nik }}">
+            --}}
+            {{-- <button class="btn btn-warning btn-outline-warning"
+                                            onclick="return  confirm('Anda menambahkan data ini? Y/N')"><span
+                                            class="pcoded-micon"> <i class="feather icon-edit"></i>Tambahkan</span></button> --}}
+
+
         </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary">Simpan</button>
+        </div>
+        </form>
     </div>
+</div>
+</div>
+
+@endforeach
+
+
+
+
+
+
+</tr>
+@endforeach
+</tbody>
+<tfoot>
+    <tr>
+        <th>No</th>
+        <th>NIK</th>
+        @foreach($kriterias as $kriteria)
+            <th>{{ $kriteria->nama }}</th>
+        @endforeach
+    </tr>
+</tfoot>
+</table>
+</div>
+</div>
+</div>
 
 </div>
 <!-- Section end -->

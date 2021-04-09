@@ -12,6 +12,7 @@ class th_penerimaan extends Model
 
     protected $fillable = [
         'tahun',
+        'kuota',
         'status'
     ];
 }
