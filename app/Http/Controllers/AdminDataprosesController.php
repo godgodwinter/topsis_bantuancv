@@ -96,6 +96,36 @@ class AdminDataprosesController extends Controller
         //
     }
 
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Models\data_proses  $setting_range
+     * @return \Illuminate\Http\Response
+     */
+    public function destroydatacalon($nik,$th_penerimaan_id)
+    {
+        //
+         //
+        //  dd($kriteria_id);
+        // data_proses::where('data_proses',$nik)
+        // where('th_penerimaan_id',$th_penerimaan_id)
+        // ->delete();
+        // $whereArray=array('nik' => $nik,'th_penerimaan_id' => $th_penerimaan_id);
+        // data_proses::where('nik',$nik && 'th_penerimaan_id',$th_penerimaan_id)->delete();
+        DB::table('data_proses')
+        ->where('nik', $nik)
+        ->where('th_penerimaan_id', $th_penerimaan_id)
+        ->delete();
+
+        DB::table('data_proses_detail')
+        ->where('nik', $nik)
+        ->where('th_penerimaan_id', $th_penerimaan_id)
+        ->delete();
+        //  data_proses::destroy($id);
+         return redirect(URL::to('/').'/admin/dataproses/'.$th_penerimaan_id)->with('status','Data berhasil dihapus!');
+    }
+
     /**
      * Display the specified resource.
      *
@@ -173,5 +203,19 @@ data_proses_detail::where('id',$request->data_proses_detail_id)
 ]);
         return redirect(URL::to('/').'/admin/dataproses/'.$request->th_penerimaan_id)->with('status','DataSudah di ubah! ');
     }
+}
+
+//proses topsis
+public function topsisshow($id)
+{
+    //
+    $th_penerimaans = DB::table('th_penerimaan')->where('id',$id)->get();
+    $data_prosess = DB::table('data_proses')->where('th_penerimaan_id',$id)->get();
+
+    $kriterias=Kriteria::all();
+    $data_wargas=data_warga::all();
+
+    // dd($kriterias);
+    return view('admin.dataproses.topsisshow',compact('kriterias','th_penerimaans','data_wargas','data_prosess'));
 }
 }

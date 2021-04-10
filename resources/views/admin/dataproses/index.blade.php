@@ -72,7 +72,11 @@
     <div class="card">
         <div class="cointainer"> <a class="btn btn-success btn-outline-success"
                 href="/admin/dataproses/{{ $th_penerimaan->id }}/addwarga"><span class="pcoded-micon"> <i
-                        class="feather icon-edit"></i>Tambah Calon Penerima Bantuan</span></a></div>
+                        class="feather icon-edit"></i>Tambah Calon Penerima Bantuan</span></a>
+                        <a class="btn btn-danger btn-outline-danger"
+                        href="/admin/dataproses/{{ $th_penerimaan->id }}/topsis"><span class="pcoded-micon"> <i
+                                class="feather icon-edit"></i>Lanjutkan Proses TOPSIS</span></a>
+                    </div>
     </div>
     <div class="card">
 
@@ -94,8 +98,29 @@
                         {{-- data warga --}}
                         @foreach($data_prosess as $data_proses)
                             <tr>
-                                <td>{{ ($loop->index)+1 }} </td>
-                                <td>{{ $data_proses->nik }}</td>
+                                <td>
+                                    <form action="/admin/dataproses/{{$data_proses->nik}}/{{$th_penerimaan->id}}/hapusdatacalon" method="post" class="d-inline">
+                                        @method('delete')
+                                        @csrf
+                                        <button class="btn btn-danger btn-outline-warning"
+                                            onclick="return  confirm('Anda yakin menghapus data ini? Y/N')"><span
+                                                class="pcoded-micon"> <i class="feather icon-delete"></i> {{ ($loop->index)+1 }}</span></button>
+                                    </form>
+                                </td>
+                                <td>{{ $data_proses->nik }} -
+                                    <?php
+                                    $datwargas = DB::select('select * from data_warga where nik = ?', array($data_proses->nik));
+                                                foreach ($datwargas as $ambildw) {
+                                                    // dd($ambil);
+                                                    // $sr_nilai=$ambil->nilai1;
+                                                    ?>
+
+                                              {{ $ambildw->nama }}
+                                                    <?php
+                                                }
+                                    ?>
+
+                                </td>
                                 {{-- data warga diulang perkriteria --}}
                                 @foreach($kriterias as $kriteria)
                                     <td>
@@ -145,7 +170,7 @@ if($cari<1){
                                         <div class="modal-dialog" role="document">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h5 class="modal-title" id="exampleModalLabel">Modal title
+                                                    <h5 class="modal-title" id="exampleModalLabel">Data
                                                         {{ $data_proses->nik }} - {{ $kriteria->nama }}</h5>
                                                     <button type="button" class="close" data-dismiss="modal"
                                                         aria-label="Close">

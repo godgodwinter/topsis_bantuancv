@@ -44,6 +44,12 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function() {
 
     Route::post('admin/dataproses/isidata/add', 'App\Http\Controllers\AdminDataprosesController@addisidata');
 
+    Route::delete('admin/dataproses/{nik}/{th_penerimaan_id}/hapusdatacalon', 'App\Http\Controllers\AdminDataprosesController@destroydatacalon');
+
+
+    //proses topsis 1
+    Route::get('admin/dataproses/{id}/topsis', 'App\Http\Controllers\AdminDataprosesController@topsisshow');
+
     // Route::get('/kriteria', function () {
     //     return view('admin.kriteria.index');
     // })->name('admin_kriteria');
