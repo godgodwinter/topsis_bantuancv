@@ -68,15 +68,18 @@
     <!-- DOM/Jquery table start -->
 
     <!-- DOM/Jquery table end -->
-    <!-- tambah -->
-    <div class="card">
+
+
+     <!-- tombol -->
+     <div class="card">
         <div class="cointainer">
                         <a class="btn btn-danger btn-outline-danger"
-                        href="/admin/dataproses/{{ $th_penerimaan->id }}/topsis"><span class="pcoded-micon"> <i
+                        href="/admin/dataproses/1/endtopsis"><span class="pcoded-micon"> <i
                                 class="feather icon-edit"></i>Akhiri Proses TOPSIS</span></a>
                     </div>
     </div>
 
+      <!-- End tombol -->
     {{-- DATA WARGA AWAL --}}
     <div class="card">
 
@@ -593,7 +596,7 @@ echo $bobot[$data_proses->nik][$kriteria->id]." / ".$sqrtjmlxn[$kriteria->id]." 
  ->where('th_penerimaan_id', '=', $th_penerimaan->id)
  ->where('kriteria_id', '=', $kriteria->id)
  ->count();
-$yij[$data_proses->nik][$kriteria->id]=number_format(($kriteria->nilai/$rij[$data_proses->nik][$kriteria->id]),2);
+$yij[$data_proses->nik][$kriteria->id]=number_format(($kriteria->nilai*$rij[$data_proses->nik][$kriteria->id]),2);
 //masukkan kedalam array dataarray(kriteria)
 array_push($dataarray[$kriteria->id],$yij[$data_proses->nik][$kriteria->id]);
 
@@ -664,7 +667,7 @@ $jmlpowkurangdmin[$data_proses->nik]=0;
     <div class="card">
 
         <div class="card-header">
-            <h5>Langkah 6 : Cari D+, yij dikuarngi max ,hasilnya dikuadratkan . Kemudian jumlahkan . Kemudian Akar untuk mendapatkan D+ </h5>
+            <h5>Langkah 6 : Cari D+, ymax dikuarngi yij ,hasilnya dikuadratkan . Kemudian jumlahkan per nik . Kemudian Akar untuk mendapatkan D+ </h5>
         </div>
         <div class="card-block">
             <div class="table-responsive dt-responsive">
@@ -720,11 +723,11 @@ $jmlpowkurangdmin[$data_proses->nik]=0;
 // $yij[$data_proses->nik][$kriteria->id]=number_format(($kriteria->nilai/$rij[$data_proses->nik][$kriteria->id]),2);
 //masukkan kedalam array dataarray(kriteria)
 // array_push($dataarray[$kriteria->id],$yij[$data_proses->nik][$kriteria->id]);
-$hasilkurang[$data_proses->nik]=$yij[$data_proses->nik][$kriteria->id]-$max[$kriteria->id];
+$hasilkurang[$data_proses->nik]=$max[$kriteria->id]-$yij[$data_proses->nik][$kriteria->id];
 $powhasilkurang[$data_proses->nik]=number_format(pow($hasilkurang[$data_proses->nik],2),3);
 $jmlpowkurangdplus[$data_proses->nik]+=$powhasilkurang[$data_proses->nik];
 
-echo $yij[$data_proses->nik][$kriteria->id]. "- ".$max[$kriteria->id]. " = " .$hasilkurang[$data_proses->nik] ."<hr>".$powhasilkurang[$data_proses->nik];
+echo  $max[$kriteria->id]."- ".$yij[$data_proses->nik][$kriteria->id]. " = " .$hasilkurang[$data_proses->nik] ."<hr>".$powhasilkurang[$data_proses->nik];
 
 ?>
                                     </td>
@@ -773,7 +776,7 @@ echo $yij[$data_proses->nik][$kriteria->id]. "- ".$max[$kriteria->id]. " = " .$h
     <div class="card">
 
         <div class="card-header">
-            <h5>Langkah 7 : Cari D- , yij dikuarngi min ,hasilnya dikuadratkan . Kemudian jumlahkan . Kemudian Akar untuk mendapatkan D-</h5>
+            <h5>Langkah 7 : Cari D- , ymin  dikuarngi yij ,hasilnya dikuadratkan . Kemudian jumlahkan per nik . Kemudian Akar untuk mendapatkan D-</h5>
         </div>
         <div class="card-block">
             <div class="table-responsive dt-responsive">
@@ -829,11 +832,11 @@ echo $yij[$data_proses->nik][$kriteria->id]. "- ".$max[$kriteria->id]. " = " .$h
 // $yij[$data_proses->nik][$kriteria->id]=number_format(($kriteria->nilai/$rij[$data_proses->nik][$kriteria->id]),2);
 //masukkan kedalam array dataarray(kriteria)
 // array_push($dataarray[$kriteria->id],$yij[$data_proses->nik][$kriteria->id]);
-$hasilkurang[$data_proses->nik]=$yij[$data_proses->nik][$kriteria->id]-$min[$kriteria->id];
+$hasilkurang[$data_proses->nik]=$min[$kriteria->id]-$yij[$data_proses->nik][$kriteria->id];
 $powhasilkurang[$data_proses->nik]=number_format(pow($hasilkurang[$data_proses->nik],2),3);
 $jmlpowkurangdmin[$data_proses->nik]+=$powhasilkurang[$data_proses->nik];
 
-echo $yij[$data_proses->nik][$kriteria->id]. "- ".$min[$kriteria->id]. " = " .$hasilkurang[$data_proses->nik] ."<hr>".$powhasilkurang[$data_proses->nik];
+echo $min[$kriteria->id]. " - ".$yij[$data_proses->nik][$kriteria->id]. " = " .$hasilkurang[$data_proses->nik] ."<hr>".$powhasilkurang[$data_proses->nik];
 
 ?>
                                     </td>
@@ -877,6 +880,162 @@ echo $yij[$data_proses->nik][$kriteria->id]. "- ".$min[$kriteria->id]. " = " .$h
 </div>
 
     {{-- END Langkah 7 --}}
+
+    {{-- Langkah 8 --}}
+    <div class="card">
+
+        <div class="card-header">
+            <h5>Langkah 8 : Hasil Nilai Preferensi</h5>
+        </div>
+        <div class="card-block">
+            <div class="table-responsive dt-responsive">
+                <table id="dom-jqry" class="table table-striped table-bordered nowrap">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>NIK</th>
+                            <th>Nilai </th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{-- data warga --}}
+<?php
+    // $hasiltopsis = (array) null;
+?>
+                        @foreach($data_prosess as $data_proses)
+                            <tr>
+                                <td>{{ ($loop->index)+1 }} </td>
+                                <td>{{ $data_proses->nik }} -
+                                    <?php
+                                    $datwargas = DB::select('select * from data_warga where nik = ?', array($data_proses->nik));
+                                                foreach ($datwargas as $ambildw) {
+                                                    // dd($ambil);
+                                                    // $sr_nilai=$ambil->nilai1;
+                                                    ?>
+
+                                              {{ $ambildw->nama }}
+                                                    <?php
+                                                }
+                                    ?>
+
+                                </td>
+
+
+<td>
+    <?php
+        $hasilpreferensi[$data_proses->nik]=number_format($dmin[$data_proses->nik]/($dmin[$data_proses->nik]+$dplus[$data_proses->nik]),3);
+
+        $updatedatatopsis = DB::table('data_proses')
+ ->where('id', '=', $data_proses->id)->update([
+    'hasil_topsis'=>$hasilpreferensi[$data_proses->nik]]);
+    // if($hasilpreferensi[$data_proses->nik]===0.000){
+    //     $hasilpreferensi[$data_proses->nik]=0;
+    // }
+// array_push($hasiltopsis,([$data_proses->nik=>$hasilpreferensi[$data_proses->nik]]));
+    ?>
+    {{ $dmin[$data_proses->nik] }} / ( {{ $dmin[$data_proses->nik] }} + {{ $dplus[$data_proses->nik] }}) = {{ $hasilpreferensi[$data_proses->nik] }}
+</td>
+
+</tr>
+
+@endforeach
+
+</tbody>
+<tfoot>
+    <tr>
+        <th>No</th>
+        <th>NIK</th>
+        <th>Nilai Preferensi</th>
+    </tr>
+
+</tfoot>
+</table>
+</div>
+</div>
+</div>
+
+    {{-- END Langkah 8 --}}
+
+    {{-- Langkah 8 --}}
+    <div class="card">
+
+        <div class="card-header">
+            <h5>Langkah 9 : Perangkingan</h5>
+        </div>
+        <div class="card-block">
+            <div class="table-responsive dt-responsive">
+                <table id="dom-jqry" class="table table-striped table-bordered nowrap">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>NIK</th>
+                            <th>Nilai Preferensi</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+
+                        // $jsonhasil=json_encode($hasiltopsis);
+// // dd($hasiltopsis);
+// rsort($hasiltopsis);
+
+// var_dump($jsonhasil);
+	// $hasiltopsis = (array) null;
+
+                            ?>
+                        {{-- data warga --}}
+                        <?php
+
+    $datahasiltopsiss = DB::table('data_proses')->where('th_penerimaan_id',$th_penerimaan->id)->orderBy('hasil_topsis', 'desc')->get();
+                        ?>
+                        @foreach($datahasiltopsiss as $data_proses)
+                            <tr>
+                                <td>{{ ($loop->index)+1 }} </td>
+                                <td>{{ $data_proses->nik }} -
+                                    <?php
+                                    $datwargas = DB::select('select * from data_warga where nik = ?', array($data_proses->nik));
+                                                foreach ($datwargas as $ambildw) {
+                                                    // dd($ambil);
+                                                    // $sr_nilai=$ambil->nilai1;
+                                                    ?>
+
+                                              {{ $ambildw->nama }}
+                                                    <?php
+                                                }
+                                    ?>
+
+                                </td>
+
+
+<td>
+
+   {{ $hasilpreferensi[$data_proses->nik] }}
+</td>
+
+</tr>
+
+@endforeach
+
+</tbody>
+<tfoot>
+    <tr>
+        <th>No</th>
+        <th>NIK</th>
+        <th>Nilai Preferensi</th>
+    </tr>
+
+</tfoot>
+</table>
+</div>
+</div>
+</div>
+
+    {{-- END Langkah 8 --}}
+
+
+
 
 </div>
 <!-- Section end  -->
