@@ -84,19 +84,41 @@
                             <td>{{$data->status}}</td>
 
                             <td>
-                                <a class="btn btn-info btn-outline-info"
-                                href="/admin/dataproses/{{$data->id}}"><span class="pcoded-micon"> <i
-                                        class="feather icon-edit"></i>Detail</span></a>
-                                <a class="btn btn-warning btn-outline-warning"
-                                    href="/admin/bantuan/{{$data->id}}/edit"><span class="pcoded-micon"> <i
-                                            class="feather icon-edit"></i></span></a>
-                                <form action="/admin/bantuan/{{$data->id}}" method="post" class="d-inline">
-                                    @method('delete')
-                                    @csrf
-                                    <button class="btn btn-danger btn-outline-warning"
-                                        onclick="return  confirm('Anda yakin menghapus data ini? Y/N')"><span
-                                            class="pcoded-micon"> <i class="feather icon-delete"></i></span></button>
-                                </form>
+                                <?php if(($data->status)=="Proses"){
+                                    ?>
+                                     <a class="btn btn-info btn-outline-info"
+                                     href="/admin/dataproses/{{$data->id}}"><span class="pcoded-micon"> <i
+                                             class="feather icon-edit"></i>Detail</span></a>
+                                     <a class="btn btn-warning btn-outline-warning"
+                                         href="/admin/bantuan/{{$data->id}}/edit"><span class="pcoded-micon"> <i
+                                                 class="feather icon-edit"></i></span></a>
+                                     <form action="/admin/bantuan/{{$data->id}}" method="post" class="d-inline">
+                                         @method('delete')
+                                         @csrf
+                                         <button class="btn btn-danger btn-outline-warning"
+                                             onclick="return  confirm('Anda yakin menghapus data ini? Y/N')"><span
+                                                 class="pcoded-micon"> <i class="feather icon-delete"></i></span></button>
+                                     </form>
+
+                                    <?php
+                                }elseif(($data->status)=="Selesai"){
+                                        ?>
+                                        <a class="btn btn-info btn-outline-info"
+                                        href="/admin/dataproses/{{$data->id}}/hasil"><span class="pcoded-micon"> <i
+                                                class="feather icon-edit"></i>Detail</span></a>
+                                        <a class="btn btn-warning btn-outline-warning"
+                                                href="/admin/bantuan/{{$data->id}}/edit"><span class="pcoded-micon"> <i
+                                                        class="feather icon-edit"></i></span></a>
+                                        <?php
+                                }else{
+                                    ?>
+                                     <a class="btn btn-warning btn-outline-warning"
+                                     href="/admin/bantuan/{{$data->id}}/edit"><span class="pcoded-micon"> <i
+                                             class="feather icon-edit"></i></span></a>
+                                    <?php
+                                }
+                                ?>
+
                             </td>
                         </tr>
                         @endforeach
@@ -154,8 +176,6 @@
                                     required>
 
                                     <option>Proses</option>
-                                    <option>Selesai</option>
-                                    <option>Dibatalkan</option>
                                 </select> @error('status')<div class="invalid-feedback"> {{$message}}
                                 </div>
                                 @enderror

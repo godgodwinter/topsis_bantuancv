@@ -102,7 +102,6 @@
 
                                     <option selected>{{$data->status}}</option>
                                     <option>Proses</option>
-                                    <option>Selesai</option>
                                     <option>Dibatalkan</option>
                                 </select> @error('status')<div class="invalid-feedback"> {{$message}}
                                 </div>
