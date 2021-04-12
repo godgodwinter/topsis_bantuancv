@@ -479,7 +479,14 @@ if($cari<1){
  ->where('kriteria_id', '=', $kriteria->id)
  ->count();
 //  dd($cari);
+//jika 0
+if($bobot[$data_proses->nik][$kriteria->id]==0){
+    $rij[$data_proses->nik][$kriteria->id]=0;
+}else{
+//jika bukan 0
 $rij[$data_proses->nik][$kriteria->id]=number_format(($bobot[$data_proses->nik][$kriteria->id]/$sqrtjmlxn[$kriteria->id]),3);
+}
+
 echo $bobot[$data_proses->nik][$kriteria->id]." / ".$sqrtjmlxn[$kriteria->id]." = ".$rij[$data_proses->nik][$kriteria->id];
 // //jika data belum diisi
 // if($cari<1){
