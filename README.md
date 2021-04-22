@@ -169,9 +169,10 @@ Distributed under the MIT License. See `LICENSE` for more information.
 <!-- CONTACT -->
 ## Contact
 
-Your Name - [@your_twitter](https://twitter.com/your_username) - email@example.com
+Kukuh Setya Nugraha - [@kakadlz](https://twitter.com/kakadlz) 
+Kukuh Setya Nugraha - [@kukuh.sn](https://www.instagram.com/kukuh.sn/) 
 
-Project Link: [https://github.com/your_username/repo_name](https://github.com/your_username/repo_name)
+Project Link: [https://github.com/godgodwinter/topsis_bantuancv](https://github.com/your_username/repo_name)
 
 
 
