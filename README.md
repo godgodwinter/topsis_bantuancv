@@ -148,6 +148,12 @@ This is an example of how to list things you need to use the software and how to
     php artisan db:seed --class=tahunSeeder   //untuk meload data tahun penerimaan
    ```
 
+Buka browser dan tulis alamat berikut
+   
+   ```sh
+   http://127.0.0.1:8000/
+   ```
+
 <!-- USAGE EXAMPLES -->
 ## Usage
 
