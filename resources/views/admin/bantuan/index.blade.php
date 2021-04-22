@@ -88,7 +88,7 @@
                                     ?>
                                      <a class="btn btn-info btn-outline-info"
                                      href="/admin/dataproses/{{$data->id}}"><span class="pcoded-micon"> <i
-                                             class="feather icon-edit"></i>Detail</span></a>
+                                             class="feather icon-edit"></i>Detail Proses</span></a>
                                      <a class="btn btn-warning btn-outline-warning"
                                          href="/admin/bantuan/{{$data->id}}/edit"><span class="pcoded-micon"> <i
                                                  class="feather icon-edit"></i></span></a>
@@ -105,7 +105,7 @@
                                         ?>
                                         <a class="btn btn-info btn-outline-info"
                                         href="/admin/dataproses/{{$data->id}}/hasil"><span class="pcoded-micon"> <i
-                                                class="feather icon-edit"></i>Detail</span></a>
+                                                class="feather icon-edit"></i>Hasil dan Grafik</span></a>
                                         <a class="btn btn-warning btn-outline-warning"
                                                 href="/admin/bantuan/{{$data->id}}/edit"><span class="pcoded-micon"> <i
                                                         class="feather icon-edit"></i></span></a>
