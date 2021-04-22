@@ -52,6 +52,11 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function() {
     //proses topsis 1
     Route::get('admin/dataproses/{id}/topsis', 'App\Http\Controllers\AdminDataprosesController@topsisshow');
 
+    //hasilproses topsis
+    Route::get('admin/dataproses/{id}/hasil', 'App\Http\Controllers\AdminDataprosesController@topsisshowhasil');
+    //akhiri topsis
+    Route::get('admin/dataproses/{id}/endtopsis', 'App\Http\Controllers\AdminDataprosesController@endtopsis');
+
     // Route::get('/kriteria', function () {
     //     return view('admin.kriteria.index');
     // })->name('admin_kriteria');

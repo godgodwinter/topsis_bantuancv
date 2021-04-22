@@ -41,7 +41,7 @@
             <div class="page-header-breadcrumb">
                 <ul class="breadcrumb-title">
                     <li class="breadcrumb-item">
-                        <a href="index.html"> <i class="feather icon-home"></i> </a>
+                        <a href="#"> <i class="feather icon-home"></i> </a>
                     </li>
                     <li class="breadcrumb-item"><a href="#!">@yield('title')</a> </li>
                 </ul>
@@ -74,7 +74,8 @@
      <div class="card">
         <div class="cointainer">
                         <a class="btn btn-danger btn-outline-danger"
-                        href="/admin/dataproses/1/endtopsis"><span class="pcoded-micon"> <i
+                        href="/admin/dataproses/{{ $th_penerimaan->id }}/endtopsis"
+                        onclick="return  confirm('Anda yakin mengakhiri proses ini? Y/N')"><span class="pcoded-micon"> <i
                                 class="feather icon-edit"></i>Akhiri Proses TOPSIS</span></a>
                     </div>
     </div>
@@ -994,8 +995,8 @@ echo $min[$kriteria->id]. " - ".$yij[$data_proses->nik][$kriteria->id]. " = " .$
                             ?>
                         {{-- data warga --}}
                         <?php
-
-    $datahasiltopsiss = DB::table('data_proses')->where('th_penerimaan_id',$th_penerimaan->id)->orderBy('hasil_topsis', 'desc')->get();
+                        $kuota=$th_penerimaan->kuota;
+                            $datahasiltopsiss = DB::table('data_proses')->where('th_penerimaan_id',$th_penerimaan->id)->orderBy('hasil_topsis', 'desc')->get();
                         ?>
                         @foreach($datahasiltopsiss as $data_proses)
                             <tr>

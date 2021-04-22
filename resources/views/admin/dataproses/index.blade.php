@@ -26,6 +26,7 @@
 @foreach($th_penerimaans as $th_penerimaan)
 @endforeach
 
+{{-- {{ dd($jmldata) }} --}}
 {{-- {{dd($kriteria) }} --}}
 <div class="page-header">
     <div class="row align-items-end">
@@ -33,7 +34,7 @@
             <div class="page-header-title">
                 <div class="d-inline">
                     <h4> @yield('title')</h4>
-                    <span> </span>
+                    <span>Jumlah Warga harus lebih dari  Dua <code>(>2)</code> </span>
                 </div>
             </div>
         </div>
@@ -41,9 +42,10 @@
             <div class="page-header-breadcrumb">
                 <ul class="breadcrumb-title">
                     <li class="breadcrumb-item">
-                        <a href="index.html"> <i class="feather icon-home"></i> </a>
+                        <a href="#"> <i class="feather icon-home"></i> </a>
                     </li>
                     <li class="breadcrumb-item"><a href="#!">@yield('title')</a> </li>
+
                 </ul>
             </div>
         </div>
@@ -73,9 +75,24 @@
         <div class="cointainer"> <a class="btn btn-success btn-outline-success"
                 href="/admin/dataproses/{{ $th_penerimaan->id }}/addwarga"><span class="pcoded-micon"> <i
                         class="feather icon-edit"></i>Tambah Calon Penerima Bantuan</span></a>
-                        <a class="btn btn-danger btn-outline-danger"
-                        href="/admin/dataproses/{{ $th_penerimaan->id }}/topsis"><span class="pcoded-micon"> <i
-                                class="feather icon-edit"></i>Lanjutkan Proses TOPSIS</span></a>
+                        <?php
+                        if($jmldata>2){
+                            ?>
+
+<a class="btn btn-danger btn-outline-danger"
+href="/admin/dataproses/{{ $th_penerimaan->id }}/topsis"><span class="pcoded-micon"> <i
+        class="feather icon-edit"></i>Lanjutkan Proses TOPSIS</span></a>
+
+                            <?php
+                        }else{
+?>
+<button class="btn btn-inverse btn-outline-inverse" disabled><span class="pcoded-micon"> <i
+        class="feather icon-edit"></i>Lanjutkan Proses TOPSIS</span></button>
+
+<?php
+                        }
+                        ?>
+
                     </div>
     </div>
     <div class="card">

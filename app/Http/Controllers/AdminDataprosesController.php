@@ -51,6 +51,14 @@ class AdminDataprosesController extends Controller
      */
     public function show($id)
     {
+    //cek apakah data lebih dari 2
+        $jmldata = DB::table('data_proses')
+         ->where('th_penerimaan_id', '=', $id)
+         ->count();
+
+        // dd($jmldata);
+
+
         //
         $th_penerimaans = DB::table('th_penerimaan')->where('id',$id)->get();
         $data_prosess = DB::table('data_proses')->where('th_penerimaan_id',$id)->get();
@@ -59,7 +67,7 @@ class AdminDataprosesController extends Controller
         $data_wargas=data_warga::all();
 
         // dd($kriterias);
-        return view('admin.dataproses.index',compact('kriterias','th_penerimaans','data_wargas','data_prosess'));
+        return view('admin.dataproses.index',compact('kriterias','th_penerimaans','data_wargas','data_prosess','jmldata'));
     }
 
     /**
@@ -208,6 +216,8 @@ data_proses_detail::where('id',$request->data_proses_detail_id)
 //proses topsis
 public function topsisshow($id)
 {
+
+
     //
     $th_penerimaans = DB::table('th_penerimaan')->where('id',$id)->get();
     $data_prosess = DB::table('data_proses')->where('th_penerimaan_id',$id)->get();
@@ -217,5 +227,46 @@ public function topsisshow($id)
 
     // dd($kriterias);
     return view('admin.dataproses.topsisshow',compact('kriterias','th_penerimaans','data_wargas','data_prosess'));
+}
+
+
+//hasil proses topsis
+public function topsisshowhasil($id)
+{
+    //
+    $th_penerimaans = DB::table('th_penerimaan')
+    ->where('id',$id)->get();
+    $data_prosess = DB::table('data_proses')
+    ->where('th_penerimaan_id',$id)->get();
+
+    $kriterias=Kriteria::all();
+    $data_wargas=data_warga::all();
+
+    // dd($kriterias);
+    return view('admin.dataproses.topsisshowhasil',compact('kriterias','th_penerimaans','data_wargas','data_prosess'));
+}
+
+//proses topsis
+public function endtopsis($id)
+{
+    // //cek apakah
+    // $users_count = DB::table('users')
+    //  ->where('username', '=', $username)
+    //  ->where('password', '=', $password)
+    //  ->count();
+    $updatedatatopsis = DB::table('th_penerimaan')
+    ->where('id', '=', $id)->update([
+       'status'=>'Selesai']);
+
+    $th_penerimaans = DB::table('th_penerimaan')
+    ->where('id',$id)->get();
+    $data_prosess = DB::table('data_proses')
+    ->where('th_penerimaan_id',$id)->get();
+
+    $kriterias=Kriteria::all();
+    $data_wargas=data_warga::all();
+
+    // dd($kriterias);
+    return view('admin.dataproses.topsisshowhasil',compact('kriterias','th_penerimaans','data_wargas','data_prosess'));
 }
 }
