@@ -70,3 +70,6 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function() {
 Route::get('/dashboard2', function () {
     return view('admin.dashboard');
 })->name('admin_dashboard');
+
+Route::get('/chartSample1', 'App\Http\Controllers\AdminDataprosesController@chartSample1')->name('chartSample1');
+Route::get('/charttopsis/{id}', 'App\Http\Controllers\AdminDataprosesController@charttopsis')->name('charttopsis');

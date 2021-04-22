@@ -52,7 +52,7 @@
           <li><a class="nav-link scrollto active" href="{{ url('/')}}/#hero">Beranda</a></li>
           <li><a class="nav-link scrollto" href="{{ url('/')}}/#about">Tentang</a></li>
           <li><a class="nav-link scrollto" href="{{ url('/')}}/#services">Pengambilan</a></li>
-          <li><a class="getstarted scrollto" href="{{ url('/')}}/cari">Cari</a></li>
+          {{-- <li><a class="getstarted scrollto" href="{{ url('/')}}/cari">Cari</a></li> --}}
 
         </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>
@@ -71,7 +71,7 @@
           <h2> KEPADA PENDUDUK DESA BANGELAN MENGGUNAKAN METODE TOPSIS</h2>
           <div class="d-flex justify-content-center justify-content-lg-start">
             <a href="{{ url('/')}}/login" class="btn-get-started scrollto">Masuk</a>
-            <a href="{{ url('/')}}/cari" class="glightbox btn-watch-video"><i class="bi bi-play-circle"></i><span>Cari NIK</span></a>
+            {{-- <a href="{{ url('/')}}/cari" class="glightbox btn-watch-video"><i class="bi bi-play-circle"></i><span>Cari NIK</span></a> --}}
           </div>
         </div>
         <div class="col-lg-6 order-1 order-lg-2 hero-img" data-aos="zoom-in" data-aos-delay="200">

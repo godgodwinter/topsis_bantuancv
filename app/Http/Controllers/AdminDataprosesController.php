@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Charts\SampleChart;
 use App\Models\data_proses;
 use App\Models\data_proses_detail;
 use App\Models\data_warga;
@@ -9,6 +10,7 @@ use App\Models\Kriteria;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\URL;
+use App\Charts\TopsisChart;
 
 class AdminDataprosesController extends Controller
 {
@@ -229,7 +231,73 @@ public function topsisshow($id)
     return view('admin.dataproses.topsisshow',compact('kriterias','th_penerimaans','data_wargas','data_prosess'));
 }
 
+public function chartSample1()
+{
+    $data = array(
+        "chart" => array(
+            "labels" => ["First123", "Second123", "Third213"]
+        ),
+        "datasets" => array(
+            array("name" => "Sample 1", "values" => array(10, 3, 7)),
+            array("name" => "Sample 2", "values" => array(1, 6, 2)),
+        )
+    );
 
+    return $data;
+}
+public function charttopsis($id)
+{
+    // $data = array(
+    //     "chart" => array(
+    //         "labels" => ["Orang1"]
+    //     ),
+    //     "datasets" => array(
+    //         array("name" => "Hasil", "values" => array(1))
+    //     )
+    // );
+
+    // array push ke chart label
+    // $newdata='Paijo';
+    // $data["chart"]["labels"][] = $newdata;
+
+
+        // dd($data);
+
+        $i=0;
+
+        $data_prosess = DB::table('data_proses')->where('th_penerimaan_id',$id)->orderBy('hasil_topsis', 'desc')->get();
+
+
+        foreach($data_prosess as $dp){
+            // dd($dp->nik);
+        $newdata=$dp->nik;
+
+        $datawarga = DB::table('data_warga')->where('nik',$dp->nik)->get();
+        foreach($datawarga as $dw){
+            $namawarga=$dw->nama;
+            $namawargalimit=mb_strimwidth($namawarga, 0, 10, "");
+        }
+        // $newdata_hasil=$dp->hasil_topsis;
+        $data["chart"]["labels"][] = $namawargalimit;
+        // $data["datasets"][0]["values"] = $newdata_hasil;
+    $i++;
+        }
+
+
+        $data["datasets"][0]["name"] = "hasil";
+    foreach($data_prosess as $dp){
+        // dd($dp->nik);
+    // $newdata=$dp->nik;
+    $newdata_hasil=$dp->hasil_topsis;
+    // $data["chart"]["labels"][] = $newdata;
+    $data["datasets"][0]["values"][] = $newdata_hasil;
+$i++;
+    }
+    // dd($data);
+
+
+    return $data;
+}
 //hasil proses topsis
 public function topsisshowhasil($id)
 {
@@ -242,7 +310,18 @@ public function topsisshowhasil($id)
     $kriterias=Kriteria::all();
     $data_wargas=data_warga::all();
 
-    // dd($kriterias);
+    // // dd($kriterias);
+    // $TopsisChart = new SampleChart;
+    // $TopsisChart->labels(['Jan', 'Feb', 'Mar']);
+    // $TopsisChart->dataset('Users by trimester', 'line', [10, 25, 13]);
+
+    // $TopsisChart = TopsisChart::new('line', 'highcharts')
+    //         ->setTitle('My nice chart')
+    //         ->setLabels(['First', 'Second', 'Third'])
+    //         ->setValues([5,10,20])
+    //         ->setDimensions(1000,500)
+    //         ->setResponsive(false);
+// dd($TopsisChart);
     return view('admin.dataproses.topsisshowhasil',compact('kriterias','th_penerimaans','data_wargas','data_prosess'));
 }
 
