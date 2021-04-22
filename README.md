@@ -172,7 +172,7 @@ Distributed under the MIT License. See `LICENSE` for more information.
 Kukuh Setya Nugraha - [@kakadlz](https://twitter.com/kakadlz) 
 Kukuh Setya Nugraha - [@kukuh.sn](https://www.instagram.com/kukuh.sn/) 
 
-Project Link: [https://github.com/godgodwinter/topsis_bantuancv](https://github.com/your_username/repo_name)
+Project Link: [https://github.com/godgodwinter/topsis_bantuancv](https://github.com/godgodwinter/topsis_bantuancv)
 
 
 
