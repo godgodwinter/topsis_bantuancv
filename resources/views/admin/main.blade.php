@@ -189,21 +189,6 @@
                                     </a>
                                 </li>
                             </ul>
-                            <div class="pcoded-navigatio-lavel">Halaman Developer</div>
-                            <ul class="pcoded-item pcoded-left-item">
-                                <li class="">
-                                    <a href="{{ url('/')}}/doc">
-                                        <span class="pcoded-micon"><i class="feather icon-monitor"></i></span>
-                                        <span class="pcoded-mtext">Documentation</span>
-                                    </a>
-                                </li>
-                                <li class="">
-                                    <a href="{{ url('/')}}/aboutus">
-                                        <span class="pcoded-micon"><i class="feather icon-help-circle"></i></span>
-                                        <span class="pcoded-mtext">About Us</span>
-                                    </a>
-                                </li>
-                            </ul>
 
                         </div>
                     </nav>

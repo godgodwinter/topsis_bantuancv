@@ -18,7 +18,7 @@
                 </div>
                   <!-- Navigation Links -->
                   <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-jet-nav-link href="{{ route('admin_dashboard') }}" :active="request()->routeIs('dashboard')">
+                    <x-jet-nav-link href="{{ url('/')}}/admin/kriteria">
                         {{ __('Panel Admin') }}
                     </x-jet-nav-link>
                 </div>
