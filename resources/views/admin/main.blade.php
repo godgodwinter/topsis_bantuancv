@@ -124,7 +124,7 @@
                                     <div class="dropdown-toggle" data-toggle="dropdown">
                                         <img src="{{ asset("admin-style/") }}/files/assets/images/avatar-4.jpg"
                                             class="img-radius" alt="User-Profile-Image">
-                                        <span>{{ __('Manage Account') }}</span>
+                                        <span> {{ Auth::user()->name }}</span>
                                         <i class="feather icon-chevron-down"></i>
                                     </div>
                                     <ul class="show-notification profile-notification dropdown-menu"
@@ -165,11 +165,13 @@
                                 <li class="">
                                     <a href="{{ url('/')}}/dashboard">
                                         <span class="pcoded-micon"><i class="feather icon-watch"></i></span>
-                                        <span class="pcoded-mtext">Dashboard</span>
+                                        <span class="pcoded-mtext">Dashboard </span>
                                     </a>
 
                                 </li>
-
+                                {{-- @php
+                                if()
+                                @endphp --}}
                                 <li class="">
                                     <a href="{{url('/')}}/admin/kriteria">
                                         <span class="pcoded-micon"><i class="feather icon-monitor"></i></span>

@@ -25,5 +25,15 @@ class UserSeeder extends Seeder
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now()
          ]);
+
+
+        DB::table('users')->insert([
+            'name' => 'Kepala Desa',
+            'email' => 'kepdes@gmail.com',
+            'current_team_id' => '1',
+            'password' => '$2y$10$oOhE/tcF8MC9crGCw/Zv5.zFMGu0JLm591undChCaHJM6YrnGjgCu',
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now()
+         ]);
     }
 }
