@@ -133,7 +133,7 @@ This is an example of how to list things you need to use the software and how to
    ```
 6. Jika ingin menggunakan data palsu untuk testing lanjutkan langkah 6 ini
    ```sh
-   php artisan db:seed --class=userseeder  //untuk meload data user admin@gmail.com pass 12345678
+   php artisan db:seed --class=userseeder  //untuk meload data user admin@gmail.com pass 12345678 //untuk data kedes kades@gmail.com pass 12345678
    ```
    
    ```sh
