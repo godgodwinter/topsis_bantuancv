@@ -11,6 +11,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\URL;
 use App\Charts\TopsisChart;
+// use Barryvdh\DomPDF\PDF;
+use Barryvdh\DomPDF\Facade as PDF;
 
 class AdminDataprosesController extends Controller
 {
@@ -323,6 +325,22 @@ public function topsisshowhasil($id)
     //         ->setResponsive(false);
 // dd($TopsisChart);
     return view('admin.dataproses.topsisshowhasil',compact('kriterias','th_penerimaans','data_wargas','data_prosess'));
+}
+
+
+public function cetak($id)
+{
+    //
+    $th_penerimaans = DB::table('th_penerimaan')
+    ->where('id',$id)->get();
+    $data_prosess = DB::table('data_proses')
+    ->where('th_penerimaan_id',$id)->get();
+
+    $kriterias=Kriteria::all();
+    $data_wargas=data_warga::all();
+
+    $pdf = PDF::loadview('admin.dataproses.rekap_hasil',['data_prosess'=>$data_prosess],compact('th_penerimaans'));
+    return $pdf->download('laporan-proses-pdf');
 }
 
 //proses topsis

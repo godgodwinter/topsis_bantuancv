@@ -78,7 +78,7 @@
     <div class="card">
 
         <div class="card-header">
-            <h5>Warga yang memeroleh bantuan</h5>
+            <a href="cetak" class="btn btn-primary" target="_blank">CETAK PDF</a>
         </div>
         <div class="card-block">
             <div class="table-responsive dt-responsive">
