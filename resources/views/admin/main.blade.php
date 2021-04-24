@@ -162,13 +162,27 @@
                         <div class="pcoded-inner-navbar main-menu">
                             <div class="pcoded-navigatio-lavel">Menu</div>
                             <ul class="pcoded-item pcoded-left-item">
+
                                 <li class="">
                                     <a href="{{ url('/')}}/dashboard">
-                                        <span class="pcoded-micon"><i class="feather icon-watch"></i></span>
+                                        <span class="pcoded-micon"><i class="feather icon-home"></i></span>
                                         <span class="pcoded-mtext">Dashboard </span>
                                     </a>
 
                                 </li>
+                                <li class="">
+                                    <a href="{{ url('/')}}/kades/laporan">
+                                        <span class="pcoded-micon"><i class="feather icon-layout"></i></span>
+                                        <span class="pcoded-mtext">Laporan </span>
+                                    </a>
+
+                                </li>
+@php
+    if((Auth::user()->current_team_id)==1){
+
+    }else{
+@endphp
+
                                 {{-- @php
                                 if()
                                 @endphp --}}
@@ -190,6 +204,9 @@
                                         <span class="pcoded-mtext">Bantuan</span>
                                     </a>
                                 </li>
+                                @php
+                            }
+                                @endphp
                             </ul>
 
                         </div>

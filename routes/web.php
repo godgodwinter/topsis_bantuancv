@@ -58,6 +58,12 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function() {
     Route::get('admin/dataproses/{id}/endtopsis', 'App\Http\Controllers\AdminDataprosesController@endtopsis');
     Route::get('admin/dataproses/{id}/cetak', 'App\Http\Controllers\AdminDataprosesController@cetak');
 
+    //menu kades
+    Route::resource('kades/laporan','App\Http\Controllers\KadesLaporanController');
+    Route::get('kades/laporan/{id}/verif', 'App\Http\Controllers\KadesLaporanController@verif');
+    Route::get('kades/laporan/{id}/verifikasi', 'App\Http\Controllers\KadesLaporanController@verifikasi');
+    Route::get('kades/laporan/{id}/verifikasibatalkan', 'App\Http\Controllers\KadesLaporanController@verifikasibatalkan');
+
     // Route::get('/kriteria', function () {
     //     return view('admin.kriteria.index');
     // })->name('admin_kriteria');

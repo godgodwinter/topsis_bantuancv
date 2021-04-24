@@ -10,7 +10,15 @@
             <div class="page-header-title">
                 <div class="d-inline">
                     <h4>Dashboard</h4>
-                    <span>Selamat datang di Halaman Beranda Administrator.</span>
+                    <span>Selamat datang di Halaman Beranda
+                        @php
+    if((Auth::user()->current_team_id)==1){
+        echo"Kepala Desa";
+    }else{
+        echo"Administrator";
+    }
+@endphp
+                        .</span>
                 </div>
             </div>
         </div>
