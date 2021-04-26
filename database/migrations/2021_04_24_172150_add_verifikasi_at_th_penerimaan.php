@@ -15,7 +15,7 @@ class AddVerifikasiAtThPenerimaan extends Migration
     {
         //
         Schema::table('th_penerimaan', function($table) {
-            $table->string('verif');
+            $table->string('verif')->nullable();
         });
     }
 
