@@ -79,7 +79,7 @@
     <div class="card">
 
         <div class="card-header">
-            <a href="cetak" class="btn btn-primary" target="_blank">CETAK PDF</a>
+            <a href="{{url('/')}}/admin/dataproses/{{ $th_penerimaan->id }}/cetak" class="btn btn-primary" target="_blank">CETAK PDF</a>
             @php
                 if(($th_penerimaan->verif)==""){
             @endphp

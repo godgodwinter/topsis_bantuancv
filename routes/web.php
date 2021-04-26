@@ -1,6 +1,9 @@
 <?php
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -57,6 +60,15 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function() {
     //akhiri topsis
     Route::get('admin/dataproses/{id}/endtopsis', 'App\Http\Controllers\AdminDataprosesController@endtopsis');
     Route::get('admin/dataproses/{id}/cetak', 'App\Http\Controllers\AdminDataprosesController@cetak');
+
+    // $datas = DB::select('select * from users where current_team_id = 1');
+    $jmldata = DB::table('users')
+    ->where('current_team_id', '=', 1)
+    ->count();
+
+    // if((Auth::user()->current_team_id)==1){
+
+        // dd(\Auth::id());
 
     //menu kades
     Route::resource('kades/laporan','App\Http\Controllers\KadesLaporanController');
