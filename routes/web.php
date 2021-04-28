@@ -62,9 +62,9 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function() {
     Route::get('admin/dataproses/{id}/cetak', 'App\Http\Controllers\AdminDataprosesController@cetak');
 
     // $datas = DB::select('select * from users where current_team_id = 1');
-    $jmldata = DB::table('users')
-    ->where('current_team_id', '=', 1)
-    ->count();
+    // $jmldata = DB::table('users')
+    // ->where('current_team_id', '=', 1)
+    // ->count();
 
     // if((Auth::user()->current_team_id)==1){
 

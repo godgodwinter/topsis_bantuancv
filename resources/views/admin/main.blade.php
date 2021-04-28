@@ -170,15 +170,18 @@
                                     </a>
 
                                 </li>
-                                <li class="">
+@php
+    if((Auth::user()->current_team_id)==1){
+        @endphp
+
+        <li class="">
                                     <a href="{{ url('/')}}/kades/laporan">
                                         <span class="pcoded-micon"><i class="feather icon-layout"></i></span>
                                         <span class="pcoded-mtext">Laporan </span>
                                     </a>
 
                                 </li>
-@php
-    if((Auth::user()->current_team_id)==1){
+        @php
 
     }else{
 @endphp
