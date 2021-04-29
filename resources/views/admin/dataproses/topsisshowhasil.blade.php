@@ -153,17 +153,132 @@ $kuota=$th_penerimaan->kuota;
 
     {{-- END Langkah 8 --}}
 
-<div class="card">
+    {{-- <div class="wrapper">
+            <div id="chart" style="height: 300px;">    </div>
+    </div> --}}
 
-    <div id="chart" style="height: 300px;">    </div>
+
+<div class="col-md-12 col-lg-12">
+    <div class="card">
+        <div class="card-header">
+            {{-- <h5>Threshold plugin for chartist</h5>
+            <span>lorem ipsum dolor sit amet, consectetur adipisicing elit</span> --}}
+            <canvas id="myChart" width="400" height="200"></canvas>
+        </div>
+        <div class="card-block">
+        </div>
+    </div>
 </div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.2.0/chart.min.js" integrity="sha512-VMsZqo0ar06BMtg0tPsdgRADvl0kDHpTbugCBBrL55KmucH6hP9zWdLIWY//OTfMnzz6xWQRxQqsUFefwHuHyg==" crossorigin="anonymous"></script>
+<script>
+    var ctx = document.getElementById('myChart').getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            @php
+            $data_prosess = DB::table('data_proses')->where('th_penerimaan_id',$th_penerimaan->id)->orderBy('hasil_topsis', 'desc')->get();
+
+            @endphp
+            labels: [
+           @php
+ foreach($data_prosess as $dp){
+                // dd($dp->nik);
+                $datawarga = DB::table('data_warga')->where('nik',$dp->nik)->get();
+                    foreach($datawarga as $dw){
+                        $namawarga=$dw->nama;
+                        $namawargalimit=mb_strimwidth($namawarga, 0, 10, "");
+                        echo "'".$namawargalimit."',";
+                    }
+               }
+
+           @endphp
+            ],
+            datasets: [{
+                label: '# of Votes',
+                data: [
+                    @php
+         foreach($data_prosess as $dp){
+                // dd($dp->nik);
+                $newdata_hasil=$dp->hasil_topsis;
+            // $data["chart"]["labels"][] = $newdata;
+            // $data["datasets"][0]["values"][] = $newdata_hasil;
+                        echo "".$newdata_hasil.",";
+
+               }
+
+           @endphp
+                ],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+    </script>
+
+{{--
+// <script>
+//     var ctx = document.getElementById('myChart').getContext('2d');
+//     var myChart = new Chart(ctx, {
+//         type: 'bar',
+//         data: {
+//             labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+//             datasets: [{
+//                 label: '# of Votes',
+//                 data: [12, 19, 3, 5, 2, 3, 19, 3, 5, 2, 3, 19, 3, 5, 2, 3, 19, 3, 5, 2, 3],
+//                 backgroundColor: [
+//                     'rgba(255, 99, 132, 0.2)',
+//                     'rgba(54, 162, 235, 0.2)',
+//                     'rgba(255, 206, 86, 0.2)',
+//                     'rgba(75, 192, 192, 0.2)',
+//                     'rgba(153, 102, 255, 0.2)',
+//                     'rgba(255, 159, 64, 0.2)'
+//                 ],
+//                 borderColor: [
+//                     'rgba(255, 99, 132, 1)',
+//                     'rgba(54, 162, 235, 1)',
+//                     'rgba(255, 206, 86, 1)',
+//                     'rgba(75, 192, 192, 1)',
+//                     'rgba(153, 102, 255, 1)',
+//                     'rgba(255, 159, 64, 1)'
+//                 ],
+//                 borderWidth: 1
+//             }]
+//         },
+//         options: {
+//             scales: {
+//                 y: {
+//                     beginAtZero: true
+//                 }
+//             }
+//         }
+//     });
+//     </script> --}}
 
 
-
-
-
-
+{{--
 
     <!-- Charting library -->
     <script src="https://unpkg.com/echarts/dist/echarts.min.js"></script>
@@ -174,9 +289,10 @@ $kuota=$th_penerimaan->kuota;
       const chart = new Chartisan({
         el: '#chart',
         url: "{{url('/charttopsis')}}/{{ $th_penerimaan->id }}",
+
       });
 
-    </script>
+    </script> --}}
 
 </div>
 <!-- Section end  -->
