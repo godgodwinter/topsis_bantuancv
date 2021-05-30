@@ -20,6 +20,8 @@ Route::get('/', function () {
     return view('beranda');
 });
 
+Route::get('/hasil/{id}/', 'App\Http\Controllers\berandaluarController@index')->name('berandaluar');
+
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('dashboard');
 })->name('dashboard');

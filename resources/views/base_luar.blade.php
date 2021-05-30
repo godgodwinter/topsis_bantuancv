@@ -1,3 +1,11 @@
+<?php
+// dd($id);
+$th_penerimaan_tahun=date("Y");
+                    $th_penerimaan_tahun=date("Y");
+                    $th_penerimaan_status="Data Bantuan Masih Kosong";
+                    $th_penerimaan_kuota=0;
+                    $th_penerimaan_verif="-";
+                    ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -52,7 +60,8 @@
           <li><a class="nav-link scrollto active" href="{{ url('/')}}/#hero">Beranda</a></li>
           <li><a class="nav-link scrollto" href="{{ url('/')}}/#about">Tentang</a></li>
           <li><a class="nav-link scrollto" href="{{ url('/')}}/#services">Pengambilan</a></li>
-          {{-- <li><a class="getstarted scrollto" href="{{ url('/')}}/cari">Cari</a></li> --}}
+          <li><a class="getstarted scrollto" href="{{ url('/')}}/#hasil">Hasil</a></li>
+          {{-- <li><a class="getstarted scrollto" href="{{ url('/')}}/cari">Hasil</a></li> --}}
 
         </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>
@@ -173,6 +182,130 @@
 
       </div>
     </section><!-- End Services Section -->
+
+       <!-- ======= Pricing Section ======= -->
+       <section id="hasil" class="pricing">
+        <div class="container" data-aos="fade-up">
+
+          <div class="section-title">
+            <h2>HASIL</h2>
+            {{-- <p>Gratis untuk menggunakan versi Alpha (Tahap pengembangan awal).</p> --}}
+          </div>
+
+          <div class="row">
+
+            <?php
+            if(empty($id)){
+                $th_query = DB::table('th_penerimaan')->orderBy('tahun', 'desc')->take(1)->get();
+            }else{
+                $th_query = DB::table('th_penerimaan')->where('id',$id)->orderBy('tahun', 'desc')->take(1)->get();
+            }
+                foreach ($th_query as $dt) {
+                    $th_penerimaan_id=$dt->id;
+                    $th_penerimaan_tahun=$dt->tahun;
+                    $th_penerimaan_status=$dt->status;
+                    $th_penerimaan_kuota=$dt->kuota;
+                    $th_penerimaan_verif=$dt->verif;
+                }
+            ?>
+            <div class="col-lg-8 mt-8 mt-lg-0" data-aos="fade-up" data-aos-delay="200">
+              <div class="box featured">
+                <h3>Data Penerimaan Bantuan COVID19</h3>
+                <h4><sup>Tahun</sup>{{ $th_penerimaan_tahun }}<span>Status : " {{ $th_penerimaan_status }} " - Kuota : {{ $th_penerimaan_kuota }} Orang</span></h4>
+                <ul>
+                    @php
+                if ($th_penerimaan_status=="Proses"){
+                    @endphp
+                    {{-- data warga --}}
+                        <?php
+                        $kuota=$th_penerimaan_kuota;
+                            $datahasiltopsiss = DB::table('data_proses')->where('th_penerimaan_id',$th_penerimaan_id)->orderBy('nik', 'asc')->get();
+                        ?>
+                        @foreach($datahasiltopsiss as $data_proses)
+                        <?php
+                            $datwargas = DB::select('select * from data_warga where nik = ?', array($data_proses->nik));
+                            foreach ($datwargas as $ambildw) {
+                        ?>
+
+
+
+                    <li><i class="bx bx bx-clipboard"></i> <span>{{ $data_proses->nik }}</span> - {{ $ambildw->nama }} </li>
+                    <?php
+                            }
+                        ?>
+                    @endforeach
+
+                    @php
+
+                }elseif($th_penerimaan_status=="Selesai"){
+                    @endphp
+                        {{-- data warga --}}
+                        <?php
+                        $kuota=$th_penerimaan_kuota;
+                            $datahasiltopsiss = DB::table('data_proses')->where('th_penerimaan_id',$th_penerimaan_id)->orderBy('hasil_topsis', 'desc')->get();
+                        ?>
+                        @foreach($datahasiltopsiss as $data_proses)
+                        <?php
+                            $datwargas = DB::select('select * from data_warga where nik = ?', array($data_proses->nik));
+                            foreach ($datwargas as $ambildw) {
+                        ?>
+
+
+
+                    <li><i class="
+                        {{ $loop->index+1<=$th_penerimaan_kuota ? 'bx bx-check' : 'na bx bx-x' }}
+                        "></i> <span>{{ $data_proses->nik }}</span> - {{ $ambildw->nama }} </li>
+                    <?php
+                            }
+                        ?>
+                    @endforeach
+                    @php
+
+                }else{
+                    @endphp
+                    <li><i class="na bx bx-x"></i> Data tidak ditemukan</li>
+                    @php
+
+                }
+                @endphp
+
+                </ul>
+
+                {{-- <a href="#team" class="buy-btn">Cetak</a> --}}
+              </div>
+            </div>
+
+            <div class="col-lg-4 mt-4 mt-lg-0" data-aos="fade-up" data-aos-delay="300">
+              <div class="box">
+                <h3>PILIH DATA</h3>
+
+                @php
+                     $th_query = DB::table('th_penerimaan')->orderBy('tahun', 'desc')->get();
+                @endphp
+                    @foreach ($th_query as $dt)
+                    @if(($dt->status=='Proses')||($dt->status=='Selesai'))
+
+
+                <a href="{{ url('/')}}/hasil/{{ $dt->id }}#hasil" class=" mt-4 btn {{ $dt->status=='Selesai' ? 'btn-success' : 'btn-primary' }}">Tahun {{ $dt->tahun }} </a>
+                @endif
+                    @endforeach
+
+
+                <h3 class="mt-4">Keterangan : </h3>
+                <ul>
+                    <li><i class="bx bx bx-clipboard"></i> Data masihh di proses</li>
+                    <li><i class="bx bx bx-check"></i> Berhak Menerima</li>
+                    <li><i class="na bx bx-x"></i> Belum Berhak Benerima</li>
+                </ul>
+
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </section><!-- End Pricing Section -->
+
 
   <!-- ======= Footer ======= -->
   <footer id="footer">
