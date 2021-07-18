@@ -67,7 +67,8 @@ class AdminDataprosesController extends Controller
         $th_penerimaans = DB::table('th_penerimaan')->where('id',$id)->get();
         $data_prosess = DB::table('data_proses')->where('th_penerimaan_id',$id)->get();
 
-        $kriterias=Kriteria::all();
+        $kriterias = DB::table('kriteria')->where('th_penerimaan_id',$id)->get();
+        // $kriterias=Kriteria::all();
         $data_wargas=data_warga::all();
 
         // dd($kriterias);
@@ -365,5 +366,16 @@ public function endtopsis($id)
 
     // dd($kriterias);
     return view('admin.dataproses.topsisshowhasil',compact('kriterias','th_penerimaans','data_wargas','data_prosess'));
+}
+
+public function kriteriaindex($id)
+{
+    // dd($id);
+
+    $th_penerimaans = DB::table('th_penerimaan')->where('id',$id)->get();
+    $kriterias = DB::table('kriteria')->where('th_penerimaan_id',$id)->get();
+//    $kriterias=Kriteria::all();
+
+    return view('admin.kriteriabaru.index',compact('kriterias','th_penerimaans'));
 }
 }

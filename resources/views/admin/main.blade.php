@@ -171,7 +171,7 @@
 
                                 </li>
 @php
-    if((Auth::user()->current_team_id)==1){
+    if((Auth::user()->tipeuser)=='kades'){
         @endphp
 
         <li class="">
@@ -182,17 +182,32 @@
 
                                 </li>
         @php
+    }elseif((Auth::user()->tipeuser)=='dusun'){
+        @endphp
 
+        <li class="">
+                                    <a href="{{url('/')}}/admin/datawarga">
+                                        <span class="pcoded-micon"><i class="feather icon-users"></i></span>
+                                        <span class="pcoded-mtext">Data Warga</span>
+                                    </a>
+                                </li>
+        @php
     }else{
 @endphp
 
                                 {{-- @php
                                 if()
                                 @endphp --}}
-                                <li class="">
+                               <!-- <li class="">
                                     <a href="{{url('/')}}/admin/kriteria">
                                         <span class="pcoded-micon"><i class="feather icon-monitor"></i></span>
                                         <span class="pcoded-mtext">Kriteria</span>
+                                    </a>
+                                </li>--->
+                                <li class="">
+                                    <a href="{{url('/')}}/admin/datawilayah">
+                                        <span class="pcoded-micon"><i class="feather icon-globe"></i></span>
+                                        <span class="pcoded-mtext">Data Wilayah</span>
                                     </a>
                                 </li>
                                 <li class="">

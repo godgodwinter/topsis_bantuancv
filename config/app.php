@@ -178,6 +178,7 @@ return [
         App\Providers\JetstreamServiceProvider::class,
         ConsoleTVs\Charts\ChartsServiceProvider::class,
         Barryvdh\DomPDF\ServiceProvider::class,
+        App\Providers\FortifyServiceProvider::class,
 
     ],
 

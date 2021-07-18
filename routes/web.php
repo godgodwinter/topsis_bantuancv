@@ -31,7 +31,30 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function() {
 
     Route::resource('admin/kriteria','App\Http\Controllers\AdminKriteriaController');
 
+    Route::get('admin/dataproses/{id}/kriteria', 'App\Http\Controllers\AdminDataprosesController@kriteriaindex');
+
+
+
     Route::resource('admin/datawarga','App\Http\Controllers\AdminDatawargaController');
+
+    Route::resource('admin/datawilayah','App\Http\Controllers\AdmindatawilayahController');
+    Route::get('admin/datawilayah/detail/{id}', 'App\Http\Controllers\AdmindatawilayahController@detail');
+    Route::post('admin/datawilayah/detail/{id}', 'App\Http\Controllers\AdmindatawilayahController@rwstore');
+    Route::delete('admin/datawilayah/detail/{dusun_id}/{id}', 'App\Http\Controllers\AdmindatawilayahController@rwdestroy');
+    Route::get('admin/datawilayah/detail/{dusun_id}/{id}/edit', 'App\Http\Controllers\AdmindatawilayahController@rwedit');
+    Route::put('admin/datawilayah/detail/{dusun_id}/{id}', 'App\Http\Controllers\AdmindatawilayahController@rwupdate');
+
+    Route::post('admin/datawilayah/user', 'App\Http\Controllers\AdmindatawilayahController@dusunuserstore');
+    Route::delete('admin/datawilayah/user/{dusun_id}/{id}', 'App\Http\Controllers\AdmindatawilayahController@dusunuserdestroy');
+    Route::get('admin/datawilayah/user/{dusun_id}/{id}/edit', 'App\Http\Controllers\AdmindatawilayahController@dusunuseredit');
+    Route::put('admin/datawilayah/user/{dusun_id}/{id}', 'App\Http\Controllers\AdmindatawilayahController@dusunuserupdate');
+
+
+    Route::post('admin/datawilayah/rwuser', 'App\Http\Controllers\AdmindatawilayahController@rwuserstore');
+    Route::get('admin/datawilayah/detailrw/{dusun_id}/{id}', 'App\Http\Controllers\AdmindatawilayahController@detailrw');
+    Route::delete('admin/datawilayah/userrw/{dusun_id}/{rw_id}/{id}', 'App\Http\Controllers\AdmindatawilayahController@rwuserdestroy');
+    Route::get('admin/datawilayah/userrw/{dusun_id}/{rw_id}/{id}/edit', 'App\Http\Controllers\AdmindatawilayahController@rwuseredit');
+    Route::put('admin/datawilayah/userrw/{dusun_id}/{rw_id}/{id}', 'App\Http\Controllers\AdmindatawilayahController@rwuserupdate');
 
     Route::resource('admin/bantuan','App\Http\Controllers\AdminBantuanController');
 

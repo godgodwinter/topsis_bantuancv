@@ -30,5 +30,7 @@ class DatawargaSeeder extends Seeder
                 'updated_at' => Carbon::now()
              ]);
     }
+
+
     }
 }
