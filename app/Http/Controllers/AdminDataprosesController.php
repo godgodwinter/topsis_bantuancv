@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\URL;
 use App\Charts\TopsisChart;
+use App\Models\setting_range;
 // use Barryvdh\DomPDF\PDF;
 use Barryvdh\DomPDF\Facade as PDF;
 
@@ -378,4 +379,170 @@ public function kriteriaindex($id)
 
     return view('admin.kriteriabaru.index',compact('kriterias','th_penerimaans'));
 }
+
+public function kriteriastore(Request $request,$id)
+{
+    // dd($id);
+    //
+     //
+     $request->validate([
+        'nama'=>'required',
+        'nilai'=>'required'
+
+    ],
+    [
+        'nama.required'=>'Nama harus diisi',
+        'nilai.required'=>'nilai harus diisi'
+
+    ]);
+        // dd($request);
+       DB::table('kriteria')->insert(
+        array(
+               'nama'     =>   $request->nama,
+               'nilai'     =>   $request->nilai,
+               'th_penerimaan_id'     =>   $id,
+               'tipekriteria'     =>   $request->tipekriteria,
+               'created_at'=>date("Y-m-d H:i:s"),
+               'updated_at'=>date("Y-m-d H:i:s")
+        ));
+
+    return redirect(URL::to('/').'/admin/dataproses/'.$id.'/kriteria')->with('status','Data berhasil di tambahkan!');
+}
+public function kriteriadestroy($th,$id)
+{
+    //
+    // dd($id);
+    Kriteria::destroy($id);
+    return redirect(URL::to('/').'/admin/dataproses/'.$th.'/kriteria')->with('status','Data berhasil dihapus!');
+}
+public function kriteriaedit($th,$id)
+{
+    //
+    // dd($id);
+    // $kriteria=product_unit::all();
+    $th_penerimaans = DB::table('th_penerimaan')->where('id',$th)->get();
+    $kriterias = DB::table('kriteria')->where('id',$id)->get();
+    return view('admin.kriteriabaru.edit',compact('kriterias','th_penerimaans'));
+}
+
+public function kriteriaupdate(Request $request, $th, $id)
+{
+    // dd($id);
+    //
+
+    $request->validate([
+        'nama'=>'required',
+        'nilai'=>'required'
+    ],
+    [
+        'nama.required'=>'Nama harus diisi',
+        'nilai.required'=>'nilai harus diisi'
+
+
+    ]);
+     //aksi update
+
+    Kriteria::where('id',$id)
+        ->update([
+            'nama'=>$request->nama,
+            'tipekriteria'=>$request->tipekriteria,
+            'nilai'=>$request->nilai
+        ]);
+        return redirect('/admin/dataproses/'.$th.'/kriteria')->with('status','Data berhasil diupdate!');
+}
+
+
+public function srindex($th,$kriteria)
+{
+    // dd($id);
+
+    $th_penerimaans = DB::table('th_penerimaan')->where('id',$th)->get();
+    $kriterias = DB::table('kriteria')->where('id',$kriteria)->get();
+    $datas = DB::table('setting_range')->where('kriteria_id',$kriteria)->get();
+//    $kriterias=Kriteria::all();
+
+    return view('admin.kriteriabaru.srindex',compact('kriterias','th_penerimaans','datas'));
+}
+
+public function srstore(Request $request,$th,$kriteria)
+{
+    //
+    // dd($request);
+    $request->validate([
+        // 'tanda'=>'required',
+        'nilai1'=>'required',
+        'bobot'=>'required'
+
+    ],
+    [
+        // 'tanda.required'=>'tanda harus diisi',
+        'nik.unique'=>'nik sudah digunakan',
+        'kriteria_id.unique'=>'kriteria_id sudah digunakan',
+        'nilai1.required'=>'nilai1 harus diisi',
+        'bobot.required'=>'bobot harus diisi'
+
+    ]);
+        // dd($request);
+        // dd($request);
+       DB::table('setting_range')->insert(
+        array(
+               'nilai1'     =>   $request->nilai1,
+               'nilai2'     =>   $request->nilai2,
+               'kriteria_id'     =>   $kriteria,
+               'bobot'     =>   $request->bobot,
+               'tanda'     =>   $request->tanda,
+               'created_at'=>date("Y-m-d H:i:s"),
+               'updated_at'=>date("Y-m-d H:i:s")
+        ));
+
+    return redirect(URL::to('/').'/admin/dataproses/'.$th.'/settingrange/'.$kriteria)->with('status','Data berhasil di tambahkan!');
+}
+public function srdestroy($th,$kriteria,$id)
+{
+    //
+    // dd($th,$kriteria,$id);
+    setting_range::destroy($id);
+    return redirect(URL::to('/').'/admin/dataproses/'.$th.'/settingrange/'.$kriteria)->with('status','Data berhasil dihapus!');
+}
+public function sredit($th,$kriteria,$id)
+{
+    //
+    // dd($id);
+    // $kriteria=product_unit::all();
+    $th_penerimaans = DB::table('th_penerimaan')->where('id',$th)->get();
+    $kriterias = DB::table('kriteria')->where('id',$kriteria)->get();
+    $datas = DB::table('setting_range')->where('id',$id)->get();
+    return view('admin.kriteriabaru.sredit',compact('kriterias','th_penerimaans','datas'));
+}
+public function srupdate(Request $request, $th, $kriteria,$id)
+{
+    // dd($id);
+    //
+
+    $request->validate([
+        'nilai1'=>'required',
+        'nilai2'=>'required',
+        'tanda'=>'required',
+        'bobot'=>'required'
+    ],
+    [
+        'nilai1.required'=>'nilai1 harus diisi',
+        'nilai2.required'=>'nilai2 harus diisi',
+        'tanda.required'=>'tanda harus diisi',
+        'bobot.required'=>'bobot harus diisi'
+
+
+    ]);
+     //aksi update
+
+    setting_range::where('id',$id)
+        ->update([
+            'nilai1'=>$request->nilai1,
+            'nilai2'=>$request->nilai2,
+            'tanda'=>$request->tanda,
+            'bobot'=>$request->bobot
+        ]);
+        return redirect(URL::to('/').'/admin/dataproses/'.$th.'/settingrange/'.$kriteria)->with('status','Data berhasil diupdate!');
+}
+
 }

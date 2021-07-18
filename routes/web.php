@@ -32,6 +32,17 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function() {
     Route::resource('admin/kriteria','App\Http\Controllers\AdminKriteriaController');
 
     Route::get('admin/dataproses/{id}/kriteria', 'App\Http\Controllers\AdminDataprosesController@kriteriaindex');
+    Route::post('admin/dataproses/{id}/kriteria', 'App\Http\Controllers\AdminDataprosesController@kriteriastore');
+    Route::delete('admin/dataproses/{th}/kriteria/{id}', 'App\Http\Controllers\AdminDataprosesController@kriteriadestroy');
+    Route::get('admin/dataproses/{th}/kriteria/{id}/edit', 'App\Http\Controllers\AdminDataprosesController@kriteriaedit');
+    Route::put('admin/dataproses/{th}/kriteria/{id}', 'App\Http\Controllers\AdminDataprosesController@kriteriaupdate');
+
+
+    Route::get('admin/dataproses/{th}/settingrange/{kriteria}', 'App\Http\Controllers\AdminDataprosesController@srindex');
+    Route::post('admin/dataproses/{th}/settingrange/{kriteria}', 'App\Http\Controllers\AdminDataprosesController@srstore');
+    Route::delete('admin/dataproses/{th}/settingrange/{kriteria}/{id}', 'App\Http\Controllers\AdminDataprosesController@srdestroy');
+    Route::get('admin/dataproses/{th}/settingrange/{kriteria}/edit/{id}', 'App\Http\Controllers\AdminDataprosesController@sredit');
+    Route::put('admin/dataproses/{th}/settingrange/{kriteria}/update/{id}', 'App\Http\Controllers\AdminDataprosesController@srupdate');
 
 
 

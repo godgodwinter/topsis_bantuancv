@@ -72,6 +72,7 @@
                             <th>No</th>
                             <th>Nama Kriteria</th>
                             <th>Nilai</th>
+                            <th>Tipe</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
@@ -80,21 +81,22 @@
 
 
                         <tr>
-                            <td>{{ ($loop->index)+1 }} </td>
+                            <td width="5%">{{ ($loop->index)+1 }} </td>
                             <td>{{$kriteria->nama}}</td>
                             <td>{{$kriteria->nilai}}</td>
+                            <td>{{$kriteria->tipekriteria}}</td>
 
-                            <td>
-                                <a class="btn btn-info btn-outline-info"
-                                    href="/admin/settingrange/{{$kriteria->id}}"><span class="pcoded-micon"> <i
+                            <td width="5%">
+                                <a class="btn btn-info btn-sm btn-outline-info"
+                                    href="/admin/dataproses/{{$th->id}}/settingrange/{{ $kriteria->id }}"><span class="pcoded-micon"> <i
                                             class="feather icon-edit"></i>Detail</span></a>
-                                <a class="btn btn-warning btn-outline-warning"
-                                    href="/admin/kriteria/{{$kriteria->id}}/edit"><span class="pcoded-micon"> <i
+                                <a class="btn btn-warning btn-sm  btn-outline-warning"
+                                    href="/admin/dataproses/{{$th->id}}/kriteria/{{$kriteria->id}}/edit"><span class="pcoded-micon"> <i
                                             class="feather icon-edit"></i></span></a>
-                                <form action="/admin/kriteria/{{$kriteria->id}}" method="post" class="d-inline">
+                                <form action="/admin/dataproses/{{$th->id}}/kriteria/{{$kriteria->id}}" method="post" class="d-inline">
                                     @method('delete')
                                     @csrf
-                                    <button class="btn btn-danger btn-outline-warning"
+                                    <button class="btn btn-sm  btn-danger btn-outline-warning"
                                         onclick="return  confirm('Anda yakin menghapus data ini? Y/N')"><span
                                             class="pcoded-micon"> <i class="feather icon-delete"></i></span></button>
                                 </form>
@@ -108,6 +110,7 @@
 
                             <th>Nama Kriteria</th>
                             <th>Nilai</th>
+                            <th>Tipe</th>
                             <th>Aksi</th>
                         </tr>
                     </tfoot>
@@ -120,7 +123,7 @@
     <div class="card">
         <div class="card-block">
             <div class="card-body">
-                <form action="/admin/kriteria " method="post">
+                <form action="/admin/dataproses/{{ $th->id }}/kriteria" method="post">
                     @csrf
                     <h5>Tambah @yield('title')</h5>
                     <span>&nbsp; </span>
@@ -147,6 +150,27 @@
                                     @error('nilai')<div class="invalid-feedback"> {{$message}}</div>
                                     @enderror
                                 </div>
+                            </div>
+
+
+                            <div class="col-lg-6 col-sm-6 col-xl-6 m-b-30">
+                                <label class="form-control-label" for="input-status">Pilih Tipe (*</label>
+                                <select name="tipekriteria" id="input-status"
+                                    class="form-control form-control-info  @error('status') is-invalid @enderror"
+                                    required>
+                                    
+                                  <option >Dinamis</option>
+                                  <option >Fixed</option>
+                               
+                                </select> @error('status')<div class="invalid-feedback"> {{$message}}
+                                </div>
+                                @enderror
+                            </div>
+
+                            <div class="col-lg-6 col-sm-6 col-xl-6 m-b-30 mt-4">
+                                <label class="form-control-label" for="input-status"><strong>Dinamis</strong> -> Input data berbentuk Real contoh : Data Penghasilan berupa Rp.500.000,00</label>
+                                <label class="form-control-label" for="input-status"><strong>Fixed</strong> -> Input data berbentuk combobox contoh : Data Tempat tinggal berupa pilihan 1. Milik pribadi 2. Keluarga dst</label>
+                                
                             </div>
 
 
