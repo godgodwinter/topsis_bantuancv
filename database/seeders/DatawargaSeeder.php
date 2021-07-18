@@ -22,6 +22,8 @@ class DatawargaSeeder extends Seeder
             // insert data ke table products menggunakan Faker
             DB::table('data_warga')->insert([
                 'nik' => $faker->numberBetween(2522221,423230232323),
+                'dusun_id' => $faker->numberBetween(1,3),
+                'rw_id' => $faker->numberBetween(1,9),
                 'nama' => $faker->name,
                 'alamat' => $faker->address,
                 'jk' => $faker->colorName ,
