@@ -30,7 +30,7 @@
         <div class="col-lg-8">
             <div class="page-header-title">
                 <div class="d-inline">
-                    <h4>{{$kriteria->nama}} - {{$kriteria->nilai}}</h4>
+                    <h4>{{$kriteria->nama}} </h4>
                     <span>Tipe "{{ $kriteria->tipekriteria }}" </span> 
                 </div>
             </div>
@@ -97,9 +97,13 @@
                                     ?>
                                     Kurang dari sama dengan {{$sr->nilai1}}
                                     <?php
+                                }elseif($sr->tanda=="Lebih dari sama dengan"){
+                                    ?>
+                                    Lebih dari sama dengan {{$sr->nilai1}}
+                                    <?php
                                 }else {
                                    ?>
-                                    Lebih dari sama dengan {{$sr->nilai1}}
+                                   {{$sr->nilai1}}
                                    <?php
                                 }
                                 ?> 
@@ -262,7 +266,7 @@
     <div class="card">
         <div class="card-block">
             <div class="card-body">
-                <form action="/admin/settingrange " method="post">
+                <form action="/admin/dataproses/{{ $th->id }}/settingrange/{{ $kriteria->id }}" method="post">
                     @csrf
                     <h5>Tambah Range</h5>
                     {{-- <span>**) Jika memilih Kurang dari atau lebih dari kosongkan inputan nilai 2 </span> --}}

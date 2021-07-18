@@ -175,8 +175,15 @@ if($cari<1){
         $ambilsetting_range= DB::table('setting_range')
  ->where('id', '=', $sr_id)->first();
 
-        // dd($ambilsetting_range);
+        if($kriteria->tipekriteria==='Fixed'){
+             // dd($ambilsetting_range);
         $dataaslitersimpan=$ambilsetting_range->nilai1;
+
+        }else{
+        $dataaslitersimpan=$ambildataprosesdetail->datareal;
+
+        }
+       
 
              echo $dataaslitersimpan;
 }
@@ -201,6 +208,8 @@ if($cari<1){
                                                 </div>
                                                 <div class="modal-body">
 
+                                                    @if ($kriteria->tipekriteria==="Fixed")
+
                                                     <form action="/admin/dataproses/isidata/add " method="post">
                                                         @csrf
 
@@ -212,6 +221,8 @@ if($cari<1){
                                                             value="{{ $data_proses->nik }}">
                                                         <input type="hidden" name="kriteria_id"
                                                             value="{{ $kriteria->id }}">
+                                                            <input type="hidden" name="tipekriteria"
+                                                                value="{{ $kriteria->tipekriteria }}">
 
                                                         <div class="col-lg-6 col-sm-6 col-xl-6 m-b-30">
                                                             <label class="form-control-label" for="input-setting_range_id">Pilih
@@ -256,6 +267,51 @@ if($cari<1){
             <button type="submit" class="btn btn-primary">Simpan</button>
         </div>
         </form>
+                                                        
+                                                    @else
+                                                    <form action="/admin/dataproses/isidata/add " method="post">
+                                                        @csrf
+
+                                                        <input type="hidden" name="data_proses_detail_id"
+                                                            value="{{ $data_proses_detail_id }}">
+                                                        <input type="hidden" name="th_penerimaan_id"
+                                                            value="{{ $th_penerimaan->id }}">
+                                                        <input type="hidden" name="nik"
+                                                            value="{{ $data_proses->nik }}">
+                                                        <input type="hidden" name="kriteria_id"
+                                                            value="{{ $kriteria->id }}">
+                                                            <input type="hidden" name="tipekriteria"
+                                                                value="{{ $kriteria->tipekriteria }}">
+
+                                                        <div class="col-lg-6 col-sm-6 col-xl-6 m-b-30">
+                                                            <label class="form-control-label" for="input-setting_range_id">Input
+                                                                Data (*</label>
+                                                                <input type="number" name="datareal" id="input-datareal"
+                                                                class="form-control form-control-alternative  @error('datareal') is-invalid @enderror"
+                                                                placeholder="Contoh : 1 " value="{{ $dataaslitersimpan }}" required>
+                                                            @error('datareal')<div class="invalid-feedback"> {{$message}}</div>
+                                                            @enderror
+            </div>
+
+
+            {{-- <input type="hidden" name="nik" value="{{ $data->nik }}">
+            --}}
+            {{-- <button class="btn btn-warning btn-outline-warning"
+                                            onclick="return  confirm('Anda menambahkan data ini? Y/N')"><span
+                                            class="pcoded-micon"> <i class="feather icon-edit"></i>Tambahkan</span></button> --}}
+
+
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary">Simpan</button>
+        </div>
+        </form>
+                                                    
+                                                        
+                                                    @endif
+
+
     </div>
 </div>
 </div>

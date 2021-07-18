@@ -15,6 +15,7 @@ class data_proses_detail extends Model
         'th_penerimaan_id',
         'setting_range_id',
         'bobot_sr',
+        'datareal',
         'kriteria_id'
     ];
 }

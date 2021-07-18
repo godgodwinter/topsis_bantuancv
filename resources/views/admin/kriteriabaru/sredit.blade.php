@@ -78,6 +78,7 @@ $kriterias = DB::table('kriteria')->where('id',$data->kriteria_id)->get();
     <!-- DOM/Jquery table end -->
     <!-- tambah -->
 
+    @if ($kriteria->tipekriteria==='Dinamis')
     <!-- tambah -->
     <div class="card">
         <div class="card-block">
@@ -163,6 +164,70 @@ $kriterias = DB::table('kriteria')->where('id',$data->kriteria_id)->get();
 </div>
 </div>
 <!-- tambah end -->
+ 
+@else
+<!-- tambah -->
+<div class="card">
+    <div class="card-block">
+        <div class="card-body">
+            <form action="/admin/dataproses/{{$th->id}}/settingrange/{{ $kriteria->id }}/update/{{ $data->id }}" method="post">
+                @method('put')
+                @csrf
+                <h5>Edit Range</h5>
+                {{-- <span>**) Jika memilih Kurang dari atau lebih dari kosongkan inputan nilai 2 </span> --}}
+                <div class="pl-lg-4">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label class="form-control-label" for="input-nilai1">Nilai (*</label>
+                                <input type="hidden" name="kriteria_id" value="{{ $data->kriteria_id }}">
+                                <input type="text" name="nilai1" id="input-nilai1"
+                                    class="form-control form-control-alternative  @error('nilai1') is-invalid @enderror"
+                                    placeholder="Contoh : 1 " value="{{ $data->nilai1 }}" required>
+                                @error('nilai1')<div class="invalid-feedback"> {{$message}}</div>
+                                @enderror
+                            </div>
+                        </div>
+
+                    
+
+
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label class="form-control-label" for="input-bobot">Bobot  (*</label>
+                                <input type="text" name="bobot" id="input-bobot"
+                                    class="form-control form-control-alternative  @error('bobot') is-invalid @enderror"
+                                    placeholder="Contoh : 4" value="{{ $data->bobot }}" required>
+                                @error('bobot')<div class="invalid-feedback"> {{$message}}</div>
+                                @enderror
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <hr class="my-4" />
+                <!-- Address -->
+                <h6 class="heading-small text-muted mb-4">Aksi</h6>
+                <div class="pl-lg-4">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <button type="Simpan" class="btn btn-success">Update</button>
+                            </div>
+                        </div>
+            </form>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+<!-- tambah end -->
+        
+@endif
 </div>
 <!-- Section end -->
 

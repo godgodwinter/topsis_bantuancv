@@ -43,6 +43,7 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function() {
     Route::delete('admin/dataproses/{th}/settingrange/{kriteria}/{id}', 'App\Http\Controllers\AdminDataprosesController@srdestroy');
     Route::get('admin/dataproses/{th}/settingrange/{kriteria}/edit/{id}', 'App\Http\Controllers\AdminDataprosesController@sredit');
     Route::put('admin/dataproses/{th}/settingrange/{kriteria}/update/{id}', 'App\Http\Controllers\AdminDataprosesController@srupdate');
+    
 
 
 

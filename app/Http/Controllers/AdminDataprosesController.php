@@ -197,6 +197,9 @@ public function addisidata (Request $request)
    if($cari<1){
     // data_proses_detail::create($request->all());
 
+    // dd($request->tipekriteria);
+    if($request->tipekriteria==='Fixed'){
+
 //jalankan simpan
     data_proses_detail::create([
         'nik' => $request->nik,
@@ -206,15 +209,107 @@ public function addisidata (Request $request)
         'bobot_sr' => $bobot_sr
     ]);
 
+
+    }else{
+        $datareal=$request->datareal;
+        $bobot_sr=0;
+        $setting_range_id=0;
+        
+        //ambil kriteriaid
+        //looping setting range
+        $ambildatasettingrange = DB::select('select * from setting_range where kriteria_id = ?', array($request->kriteria_id));
+        foreach ($ambildatasettingrange as $ambilsr) {
+            // $bobot_sr=$ambilsr->bobot;
+            // dd($bobot_sr);
+            if($ambilsr->tanda==='Lebih dari sama dengan'){
+                    if($datareal>=$ambilsr->nilai1){
+                            $bobot_sr=$ambilsr->bobot;
+                            $setting_range_id=$ambilsr->id;
+                    }
+                    
+            }elseif($ambilsr->tanda==='Diantara'){
+                if(($datareal>$ambilsr->nilai1&&($datareal<$ambilsr->nilai2))){
+                        $bobot_sr=$ambilsr->bobot;
+                        $setting_range_id=$ambilsr->id;
+                }
+            }elseif($ambilsr->tanda==='Kurang dari sama dengan'){
+                if($datareal<=$ambilsr->nilai1){
+                        $bobot_sr=$ambilsr->bobot;
+                        $setting_range_id=$ambilsr->id;
+                }
+            }
+        }
+
+        // dd($bobot_sr,$datareal,$request->kriteria_id,$setting_range_id);
+        //if tanda 'Lebih Dari Sama Dengan' === '$datareal>=$nilai1'    bobot_sr=bobot
+        //if tanda 'Diantara' === '$datareal>=$nilai1'                  bobot_sr=bobot
+        //if tanda 'Kurang Dari Sama Dengan' === '$datareal<=$nilai1'   bobot_sr=bobot
+        data_proses_detail::create([
+            'nik' => $request->nik,
+            'th_penerimaan_id' => $request->th_penerimaan_id,
+            'kriteria_id' => $request->kriteria_id,
+            'datareal' => $request->datareal,
+            'setting_range_id' => $setting_range_id,
+            'bobot_sr' => $bobot_sr
+        ]);
+
+    }
         return redirect(URL::to('/').'/admin/dataproses/'.$request->th_penerimaan_id)->with('status','Data berhasil di tambahkan!');
     }else{
 
 //jalankan update
+
+if($request->tipekriteria==='Fixed'){
 data_proses_detail::where('id',$request->data_proses_detail_id)
 ->update([
     'setting_range_id'=>$request->setting_range_id,
     'bobot_sr'=>$bobot_sr
 ]);
+}else{
+
+    $datareal=$request->datareal;
+    $bobot_sr=0;
+    $setting_range_id=0;
+    
+    //ambil kriteriaid
+    //looping setting range
+    $ambildatasettingrange = DB::select('select * from setting_range where kriteria_id = ?', array($request->kriteria_id));
+    foreach ($ambildatasettingrange as $ambilsr) {
+        // $bobot_sr=$ambilsr->bobot;
+        // dd($bobot_sr);
+        if($ambilsr->tanda==='Lebih dari sama dengan'){
+                if($datareal>=$ambilsr->nilai1){
+                        $bobot_sr=$ambilsr->bobot;
+                        $setting_range_id=$ambilsr->id;
+                }
+                
+        }elseif($ambilsr->tanda==='Diantara'){
+            if(($datareal>$ambilsr->nilai1&&($datareal<$ambilsr->nilai2))){
+                    $bobot_sr=$ambilsr->bobot;
+                    $setting_range_id=$ambilsr->id;
+            }
+        }elseif($ambilsr->tanda==='Kurang dari sama dengan'){
+            if($datareal<=$ambilsr->nilai1){
+                    $bobot_sr=$ambilsr->bobot;
+                    $setting_range_id=$ambilsr->id;
+            }
+        }
+    }
+
+    // dd($bobot_sr,$datareal,$request->kriteria_id,$setting_range_id);
+    //if tanda 'Lebih Dari Sama Dengan' === '$datareal>=$nilai1'    bobot_sr=bobot
+    //if tanda 'Diantara' === '$datareal>=$nilai1'                  bobot_sr=bobot
+    //if tanda 'Kurang Dari Sama Dengan' === '$datareal<=$nilai1'   bobot_sr=bobot
+
+        data_proses_detail::where('id',$request->data_proses_detail_id)
+        ->update([
+            'setting_range_id'=>$setting_range_id,
+            'datareal' => $request->datareal,
+            'bobot_sr'=>$bobot_sr
+        ]);
+
+
+}
         return redirect(URL::to('/').'/admin/dataproses/'.$request->th_penerimaan_id)->with('status','DataSudah di ubah! ');
     }
 }
@@ -228,7 +323,8 @@ public function topsisshow($id)
     $th_penerimaans = DB::table('th_penerimaan')->where('id',$id)->get();
     $data_prosess = DB::table('data_proses')->where('th_penerimaan_id',$id)->get();
 
-    $kriterias=Kriteria::all();
+    $kriterias = DB::table('kriteria')->where('th_penerimaan_id',$id)->get();
+    // $kriterias=Kriteria::all();
     $data_wargas=data_warga::all();
 
     // dd($kriterias);
@@ -311,7 +407,8 @@ public function topsisshowhasil($id)
     $data_prosess = DB::table('data_proses')
     ->where('th_penerimaan_id',$id)->get();
 
-    $kriterias=Kriteria::all();
+    $kriterias = DB::table('kriteria')->where('th_penerimaan_id',$id)->get();
+    // $kriterias=Kriteria::all();
     $data_wargas=data_warga::all();
 
     // // dd($kriterias);
@@ -521,14 +618,10 @@ public function srupdate(Request $request, $th, $kriteria,$id)
 
     $request->validate([
         'nilai1'=>'required',
-        'nilai2'=>'required',
-        'tanda'=>'required',
         'bobot'=>'required'
     ],
     [
         'nilai1.required'=>'nilai1 harus diisi',
-        'nilai2.required'=>'nilai2 harus diisi',
-        'tanda.required'=>'tanda harus diisi',
         'bobot.required'=>'bobot harus diisi'
 
 
