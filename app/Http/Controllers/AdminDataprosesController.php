@@ -11,8 +11,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\URL;
 use App\Charts\TopsisChart;
+use App\Models\kuota_dusun;
 use App\Models\kuota_rw;
 use App\Models\setting_range;
+use App\Models\th_penerimaan;
 // use Barryvdh\DomPDF\PDF;
 use Barryvdh\DomPDF\Facade as PDF;
 
@@ -648,6 +650,7 @@ public function kuotaindex($id)
         foreach ($dusun as $ds) {
             $cekdusundikuota = DB::table('kuota_dusun')
             ->where('dusun_id', '=', $ds->id)
+            ->where('th_penerimaan_id', '=', $id)
             ->count();
             // dd($cekdusundikuota);
             if($cekdusundikuota===0){
@@ -673,6 +676,7 @@ public function kuotaindex($id)
             foreach ($rws as $rw) {
                 $cekrwid = DB::table('kuota_rw')
                 ->where('rw_id', '=', $rw->id)
+                ->where('th_penerimaan_id', '=', $id)
                 ->count();
                 // dd($cekrwid);
             if($cekrwid===0){
@@ -708,7 +712,7 @@ public function kuotaedit($th,$id)
     // $kriteria=product_unit::all();
     $th_penerimaans = DB::table('th_penerimaan')->where('id',$th)->get();
     $kuota_dusun = DB::table('kuota_dusun')->where('th_penerimaan_id',$th)->get();
-    $kuota_rw = DB::table('kuota_rw')->where('rw_id',$id)->get();
+    $kuota_rw = DB::table('kuota_rw')->where('id',$id)->get();
     return view('admin.dataproses.kuotaedit',compact('kuota_rw','th_penerimaans','kuota_dusun'));
 }
 
@@ -731,6 +735,37 @@ public function kuotaupdate(Request $request, $th, $id)
         ->update([
             'total'=>$request->total
         ]);
+
+    //update total dusun
+    $ambildusunid = DB::table('kuota_rw')
+    ->where('id', '=', $id)
+    ->get();
+
+    foreach ($ambildusunid as $ad) {
+       $dusun_id=$ad->dusun_id;
+        // dd($ad->dusun_id);
+    }
+
+    $totalperdusun = DB::table('kuota_rw')
+    ->where('dusun_id', '=', $dusun_id)->sum('total');
+    // dd($dusun_id,$totalperdusun);
+
+
+    kuota_dusun::where('dusun_id',$dusun_id)
+        ->update([
+            'total'=>$totalperdusun
+        ]);
+        
+
+    $totalsemua = DB::table('kuota_rw')
+    ->where('th_penerimaan_id', '=', $th)->sum('total');
+    // dd($totalsemua);
+
+    th_penerimaan::where('id',$th)
+        ->update([
+            'kuota'=>$totalsemua
+        ]);
+
         return redirect('/admin/dataproses/'.$th.'/kuota')->with('status','Data berhasil diupdate!');
 }
 

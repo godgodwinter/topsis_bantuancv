@@ -112,7 +112,7 @@ href="/admin/dataproses/{{ $th_penerimaan->id }}/topsis"><span class="pcoded-mic
                 <table id="dom-jqry" class="table table-striped table-bordered nowrap">
                     <thead>
                         <tr>
-                            <th>No</th>
+                            <th width="5%">No</th>
                             <th>NIK</th>
                             @foreach($kriterias as $kriteria)
                                 <th>{{ $kriteria->nama }}</th>
@@ -127,7 +127,7 @@ href="/admin/dataproses/{{ $th_penerimaan->id }}/topsis"><span class="pcoded-mic
                                     <form action="/admin/dataproses/{{$data_proses->nik}}/{{$th_penerimaan->id}}/hapusdatacalon" method="post" class="d-inline">
                                         @method('delete')
                                         @csrf
-                                        <button class="btn btn-danger btn-outline-warning"
+                                        <button class="btn btn-danger btn-sm btn-outline-warning"
                                             onclick="return  confirm('Anda yakin menghapus data ini? Y/N')"><span
                                                 class="pcoded-micon"> <i class="feather icon-delete"></i> {{ ($loop->index)+1 }}</span></button>
                                     </form>
@@ -154,6 +154,7 @@ href="/admin/dataproses/{{ $th_penerimaan->id }}/topsis"><span class="pcoded-mic
                                             data-target="#Modalnik{{ $data_proses->id }}kriteria{{ $kriteria->id }}">
                                                {{-- $datasettingrange = DB::select('select * from setting_range where kriteria_id = ?', array($kriteria->id)); --}}
                                                     <?php
+                                                    $dataaslitersimpan=0;
                                                        $cari = $cari = DB::table('data_proses_detail')
  ->where('nik', '=', $data_proses->nik)
  ->where('th_penerimaan_id', '=', $th_penerimaan->id)

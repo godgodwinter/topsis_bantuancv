@@ -806,7 +806,7 @@ echo  $max[$kriteria->id]."- ".$yij[$data_proses->nik][$kriteria->id]. " = " .$h
                             @endforeach
                             <th>Jumlah Per NIK</th>
                                 <th>D-</th>
-                        </tr>
+                        </tr>1000000
                     </thead>
                     <tbody>
                         {{-- data warga --}}

@@ -1,6 +1,6 @@
 @extends('admin.main')
 
-@section('title','Kriteria')
+@section('title','KUOTA')
 
 @section('csshere')
 <!-- Data Table Css -->
