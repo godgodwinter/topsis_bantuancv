@@ -39,6 +39,8 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function() {
 
 
     Route::get('admin/dataproses/{id}/kuota', 'App\Http\Controllers\AdminDataprosesController@kuotaindex');
+    Route::get('admin/dataproses/{th}/kuota/{id}/edit', 'App\Http\Controllers\AdminDataprosesController@kuotaedit');
+    Route::put('admin/dataproses/{th}/kuota/{id}/update', 'App\Http\Controllers\AdminDataprosesController@kuotaupdate');
 
 
     Route::get('admin/dataproses/{th}/settingrange/{kriteria}', 'App\Http\Controllers\AdminDataprosesController@srindex');

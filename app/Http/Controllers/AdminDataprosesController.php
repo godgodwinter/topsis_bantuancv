@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\URL;
 use App\Charts\TopsisChart;
+use App\Models\kuota_rw;
 use App\Models\setting_range;
 // use Barryvdh\DomPDF\PDF;
 use Barryvdh\DomPDF\Facade as PDF;
@@ -647,27 +648,90 @@ public function kuotaindex($id)
         foreach ($dusun as $ds) {
             $cekdusundikuota = DB::table('kuota_dusun')
             ->where('dusun_id', '=', $ds->id)
-            ->get();
-            
-            // if($cekdusundikuota<1){
-            //     //insert
-            //     DB::table('kuota_dusun')->insert(
-            //         array(
-            //             'nik'     =>   $request->id,
-            //             'dusun_id'     =>   $ds->id,
-            //             'total'     =>   '0',
-            //             'created_at'=>date("Y-m-d H:i:s"),
-            //             'updated_at'=>date("Y-m-d H:i:s")
-            //         ));
+            ->count();
+            // dd($cekdusundikuota);
+            if($cekdusundikuota===0){
+                //insert
+                DB::table('kuota_dusun')->insert(
+                    array(
+                        'th_penerimaan_id'     =>   $id,
+                        'dusun_id'     =>   $ds->id,
+                        'total'     =>   '0',
+                        'created_at'=>date("Y-m-d H:i:s"),
+                        'updated_at'=>date("Y-m-d H:i:s")
+                    ));
 
-            // }
+            }else{
+
+            }
         }
 
+        //foreach rw
+            $rws = DB::table('rw')
+            ->get();
+        // cek apakah rwid sudahada jika belum insert
+            foreach ($rws as $rw) {
+                $cekrwid = DB::table('kuota_rw')
+                ->where('rw_id', '=', $rw->id)
+                ->count();
+                // dd($cekrwid);
+            if($cekrwid===0){
+                // dd('blm');
+                    //insert
+                    DB::table('kuota_rw')->insert(
+                        array(
+                            'th_penerimaan_id'     =>   $id,
+                            'dusun_id'     =>   $rw->dusun_id,
+                            'rw_id'     =>   $rw->id,
+                            'total'     =>   '0',
+                            'created_at'=>date("Y-m-d H:i:s"),
+                            'updated_at'=>date("Y-m-d H:i:s")
+                        ));
+    
+                }else{
+                    // dd('sdh');
+                }
+            }
+
     $th_penerimaans = DB::table('th_penerimaan')->where('id',$id)->get();
-    $kriterias = DB::table('kriteria')->where('th_penerimaan_id',$id)->get();
+    $kuota_dusun = DB::table('kuota_dusun')->where('th_penerimaan_id',$id)->get();
+    $kuota_rw = DB::table('kuota_rw')->where('th_penerimaan_id',$id)->get();
 //    $kriterias=Kriteria::all();
 
-    return view('admin.kriteriabaru.index',compact('kriterias','th_penerimaans'));
+    return view('admin.dataproses.kuotaindex',compact('th_penerimaans','kuota_dusun','kuota_rw'));
+}
+
+public function kuotaedit($th,$id)
+{
+    //
+    // dd($id);
+    // $kriteria=product_unit::all();
+    $th_penerimaans = DB::table('th_penerimaan')->where('id',$th)->get();
+    $kuota_dusun = DB::table('kuota_dusun')->where('th_penerimaan_id',$th)->get();
+    $kuota_rw = DB::table('kuota_rw')->where('rw_id',$id)->get();
+    return view('admin.dataproses.kuotaedit',compact('kuota_rw','th_penerimaans','kuota_dusun'));
+}
+
+public function kuotaupdate(Request $request, $th, $id)
+{
+    // dd($id);
+    //
+
+    $request->validate([
+        'total'=>'required',
+    ],
+    [
+        'total.required'=>'kuota harus diisi',
+
+
+    ]);
+     //aksi update
+
+    kuota_rw::where('id',$id)
+        ->update([
+            'total'=>$request->total
+        ]);
+        return redirect('/admin/dataproses/'.$th.'/kuota')->with('status','Data berhasil diupdate!');
 }
 
 }
