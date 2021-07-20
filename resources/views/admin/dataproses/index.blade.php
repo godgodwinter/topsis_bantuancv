@@ -74,6 +74,9 @@
     <div class="card">
         <div class="cointainer"> 
             <a class="btn btn-success btn-outline-success"
+            href="/admin/dataproses/{{ $th_penerimaan->id }}/kuota"><span class="pcoded-micon"> <i
+                    class="feather icon-edit"></i>Kuota</span></a>
+            <a class="btn btn-success btn-outline-success"
             href="/admin/dataproses/{{ $th_penerimaan->id }}/kriteria"><span class="pcoded-micon"> <i
                     class="feather icon-edit"></i>Kriteria</span></a>
 

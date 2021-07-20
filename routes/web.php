@@ -38,6 +38,9 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function() {
     Route::put('admin/dataproses/{th}/kriteria/{id}', 'App\Http\Controllers\AdminDataprosesController@kriteriaupdate');
 
 
+    Route::get('admin/dataproses/{id}/kuota', 'App\Http\Controllers\AdminDataprosesController@kuotaindex');
+
+
     Route::get('admin/dataproses/{th}/settingrange/{kriteria}', 'App\Http\Controllers\AdminDataprosesController@srindex');
     Route::post('admin/dataproses/{th}/settingrange/{kriteria}', 'App\Http\Controllers\AdminDataprosesController@srstore');
     Route::delete('admin/dataproses/{th}/settingrange/{kriteria}/{id}', 'App\Http\Controllers\AdminDataprosesController@srdestroy');
@@ -112,6 +115,10 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function() {
     Route::get('kades/laporan/{id}/verif', 'App\Http\Controllers\KadesLaporanController@verif');
     Route::get('kades/laporan/{id}/verifikasi', 'App\Http\Controllers\KadesLaporanController@verifikasi');
     Route::get('kades/laporan/{id}/verifikasibatalkan', 'App\Http\Controllers\KadesLaporanController@verifikasibatalkan');
+
+    //menu rw
+    Route::resource('rw/datawarga','App\Http\Controllers\rwdatawargacontroller');
+    Route::resource('rw/bantuan','App\Http\Controllers\rwbantuancontroller');
 
     // Route::get('/kriteria', function () {
     //     return view('admin.kriteria.index');

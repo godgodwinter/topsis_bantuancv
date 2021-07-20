@@ -638,4 +638,36 @@ public function srupdate(Request $request, $th, $kriteria,$id)
         return redirect(URL::to('/').'/admin/dataproses/'.$th.'/settingrange/'.$kriteria)->with('status','Data berhasil diupdate!');
 }
 
+public function kuotaindex($id)
+{
+    //foreach dusun
+        $dusun = DB::table('dusun')
+        ->get();
+    // cek apakah dusunid sudahada jika belum insert
+        foreach ($dusun as $ds) {
+            $cekdusundikuota = DB::table('kuota_dusun')
+            ->where('dusun_id', '=', $ds->id)
+            ->get();
+            
+            // if($cekdusundikuota<1){
+            //     //insert
+            //     DB::table('kuota_dusun')->insert(
+            //         array(
+            //             'nik'     =>   $request->id,
+            //             'dusun_id'     =>   $ds->id,
+            //             'total'     =>   '0',
+            //             'created_at'=>date("Y-m-d H:i:s"),
+            //             'updated_at'=>date("Y-m-d H:i:s")
+            //         ));
+
+            // }
+        }
+
+    $th_penerimaans = DB::table('th_penerimaan')->where('id',$id)->get();
+    $kriterias = DB::table('kriteria')->where('th_penerimaan_id',$id)->get();
+//    $kriterias=Kriteria::all();
+
+    return view('admin.kriteriabaru.index',compact('kriterias','th_penerimaans'));
+}
+
 }

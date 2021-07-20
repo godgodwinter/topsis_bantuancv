@@ -27,7 +27,7 @@ class DatawargaSeeder extends Seeder
                 'rw_id' => $faker->numberBetween(1,3),
                 'nama' => $faker->name,
                 'alamat' => $faker->address,
-                'jk' => $faker->colorName ,
+                'jk' => $faker->randomElement(['Laki-laki', 'Perempuan']),
                 'hp' => $faker->creditCardNumber,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
@@ -43,7 +43,7 @@ class DatawargaSeeder extends Seeder
                 'rw_id' => $faker->numberBetween(4,6),
                 'nama' => $faker->name,
                 'alamat' => $faker->address,
-                'jk' => $faker->colorName ,
+                'jk' => $faker->randomElement(['Laki-laki', 'Perempuan']),
                 'hp' => $faker->creditCardNumber,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
@@ -59,7 +59,7 @@ class DatawargaSeeder extends Seeder
                 'rw_id' => $faker->numberBetween(7,9),
                 'nama' => $faker->name,
                 'alamat' => $faker->address,
-                'jk' => $faker->colorName ,
+                'jk' => $faker->randomElement(['Laki-laki', 'Perempuan']),
                 'hp' => $faker->creditCardNumber,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()

@@ -192,6 +192,22 @@
                                     </a>
                                 </li>
         @php
+    }elseif((Auth::user()->tipeuser)=='rw'){
+        @endphp
+
+        <li class="">
+                                    <a href="{{url('/')}}/rw/datawarga">
+                                        <span class="pcoded-micon"><i class="feather icon-users"></i></span>
+                                        <span class="pcoded-mtext">Data Warga</span>
+                                    </a>
+                                </li>
+        <li class="">
+                                    <a href="{{url('/')}}/rw/bantuan">
+                                        <span class="pcoded-micon"><i class="feather icon-users"></i></span>
+                                        <span class="pcoded-mtext">Bantuan</span>
+                                    </a>
+                                </li>
+        @php
     }else{
 @endphp
 
