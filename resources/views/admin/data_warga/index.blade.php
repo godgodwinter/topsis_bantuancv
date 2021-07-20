@@ -72,6 +72,7 @@
                             <th>Alamat</th>
                             <th>Jenis Kelamin</th>
                             <th>No Telp</th>
+                            <th>Wilayah</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
@@ -86,6 +87,26 @@
                             <td>{{$data->alamat}}</td>
                             <td>{{$data->jk}}</td>
                             <td>{{$data->hp}}</td>
+                            <td>
+                                <?php
+                                $caridusuns = $caridusun = DB::table('dusun')
+                                    ->where('id', '=', $data->dusun_id)
+                                    ->get();
+                                ?>  
+
+                                <?php
+                                $carirw = $carirw = DB::table('rw')
+                                    ->where('id', '=', $data->rw_id)
+                                    ->get();
+                                ?>  
+                                @foreach ($caridusuns as $ds)
+                                       Dusun {{ $ds->nama }} - 
+                                @endforeach
+
+                                @foreach ($carirw as $rw)
+                                       Dusun {{ $rw->nama }} 
+                                @endforeach
+                            </td>
 
                             <td>
                                 <a class="btn btn-warning btn-outline-warning"
@@ -110,6 +131,7 @@
                             <th>Alamat</th>
                             <th>Jenis Kelamin</th>
                             <th>No Telp</th>
+                            <th>Wilayah</th>
                             <th>Aksi</th>
                         </tr>
                     </tfoot>
@@ -183,6 +205,32 @@
                                     @error('hp')<div class="invalid-feedback"> {{$message}}</div>
                                     @enderror
                                 </div>
+                            </div>
+
+                            <div class="col-lg-6 col-sm-6 col-xl-6 m-b-30">
+                                <label class="form-control-label" for="input-jk">Pilih Wilayah  (*</label>
+                                <select name="rw_id" id="input-rw_id"
+                                    class="form-control form-control-info  @error('rw_id') is-invalid @enderror"
+                                    required>
+                                    @foreach ($rws as $rw)
+
+                                    <?php
+                                    $caridusuns = $caridusun = DB::table('dusun')
+                                        ->where('id', '=', $rw->dusun_id)
+                                        ->get();
+                                    ?>  
+                                        <option value="{{ $rw->id }}">{{ $rw->nama }} -> Dusun 
+                                        
+
+                                    @foreach ($caridusuns as $ds)
+                                            {{ $ds->nama }}
+                                    @endforeach
+                                        </option>
+                                    @endforeach
+
+                                </select> @error('rw_id')<div class="invalid-feedback"> {{$message}}
+                                </div>
+                                @enderror
                             </div>
 
                         </div>

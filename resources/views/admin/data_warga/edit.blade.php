@@ -130,6 +130,60 @@
                                 </div>
                             </div>
 
+
+                            <div class="col-lg-6 col-sm-6 col-xl-6 m-b-30">
+                                <label class="form-control-label" for="input-jk">Pilih Wilayah  (*</label>
+                                <select name="rw_id" id="input-rw_id"
+                                    class="form-control form-control-info  @error('rw_id') is-invalid @enderror"
+                                    required>
+
+                                    <?php
+                                    $carirw = DB::table('rw')
+                                        ->where('id', '=', $data->rw_id)
+                                        ->get();
+                                    ?>  
+
+                                    <?php
+                                    $caridusuns = $caridusun = DB::table('dusun')
+                                        ->where('id', '=', $data->dusun_id)
+                                        ->get();
+                                    ?>  
+                                        <option value="{{ $data->dusun_id }}">
+                                            
+
+                                    @foreach ($carirw as $rw)
+                                    {{ $rw->nama }}
+                                    @endforeach
+                                            -> Dusun 
+                                        
+
+                                    @foreach ($caridusuns as $ds)
+                                            {{ $ds->nama }}
+                                    @endforeach
+                                        </option>
+
+
+                                    @foreach ($rws as $rw)
+
+                                    <?php
+                                    $caridusuns = $caridusun = DB::table('dusun')
+                                        ->where('id', '=', $rw->dusun_id)
+                                        ->get();
+                                    ?>  
+                                        <option value="{{ $rw->id }}">{{ $rw->nama }} -> Dusun 
+                                        
+
+                                    @foreach ($caridusuns as $ds)
+                                            {{ $ds->nama }}
+                                    @endforeach
+                                        </option>
+                                    @endforeach
+
+                                </select> @error('rw_id')<div class="invalid-feedback"> {{$message}}
+                                </div>
+                                @enderror
+                            </div>
+
                         </div>
                     </div>
                     <hr class="my-4" />

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\data_warga;
+use App\Models\rw;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\URL;
@@ -17,8 +18,9 @@ class AdminDatawargaController extends Controller
     public function index()
     {
         $datas=data_warga::all();
+        $rws=rw::all();
 
-        return view('admin.data_warga.index',compact('datas'));
+        return view('admin.data_warga.index',compact('datas','rws'));
         //
     }
 
@@ -46,6 +48,7 @@ class AdminDatawargaController extends Controller
             'nama'=>'required',
             'alamat'=>'required',
             'jk'=>'required',
+            'rw_id'=>'required',
             'hp'=>'required'
 
         ],
@@ -55,11 +58,45 @@ class AdminDatawargaController extends Controller
             'nama.required'=>'Nama harus diisi',
             'alamat.required'=>'alamat harus diisi',
             'jk.required'=>'Jenis Kelamin harus diisi',
+            'rw_id.required'=>'Data wilayah harus diisi',
             'hp.required'=>'No Telp harus diisi'
 
         ]);
+
+
+        $dusun_id='0';
+        $dusun_nama='0';
+        //ambil dusun_id dari rw
+        $caridusun_id = DB::table('rw')
+        ->where('id', '=', $request->rw_id)
+        ->get();
+
+        foreach ($caridusun_id as $dsid) {
+            $dusun_id=$dsid->dusun_id;
+        }
+
+        //ambil data dusun dari rw_id
+
+        $caridusuns = $caridusun = DB::table('dusun')
+        ->where('id', '=', $dusun_id)
+        ->get();
+        foreach ($caridusuns as $ds) {
+            $dusun_nama=$ds->nama;
+        }
             // dd($request);
-        data_warga::create($request->all());
+       DB::table('data_warga')->insert(
+        array(
+               'nik'     =>   $request->nik,
+               'nama'     =>   $request->nama,
+               'alamat'     =>   $request->alamat,
+               'jk'     =>   $request->jk,
+               'rw_id'     =>   $request->rw_id,
+               'dusun_id'     =>   $dusun_id,
+               'dusun_nama'     =>   $dusun_nama,
+               'hp'     =>   $request->hp,
+               'created_at'=>date("Y-m-d H:i:s"),
+               'updated_at'=>date("Y-m-d H:i:s")
+        ));
         return redirect(URL::to('/').'/admin/datawarga')->with('status','Data berhasil di tambahkan!');
     }
 
@@ -84,7 +121,8 @@ class AdminDatawargaController extends Controller
     {
         //
         $datas = DB::table('data_warga')->where('id',$id)->get();
-        return view('admin.data_warga.edit',compact('datas'));
+        $rws=rw::all();
+        return view('admin.data_warga.edit',compact('datas','rws'));
     }
 
     /**
@@ -116,12 +154,35 @@ class AdminDatawargaController extends Controller
         ]);
          //aksi update
 
+        $dusun_id='0';
+        $dusun_nama='0';
+        //ambil dusun_id dari rw
+        $caridusun_id = DB::table('rw')
+        ->where('id', '=', $request->rw_id)
+        ->get();
+
+        foreach ($caridusun_id as $dsid) {
+            $dusun_id=$dsid->dusun_id;
+        }
+
+        //ambil data dusun dari rw_id
+
+        $caridusuns = $caridusun = DB::table('dusun')
+        ->where('id', '=', $dusun_id)
+        ->get();
+        foreach ($caridusuns as $ds) {
+            $dusun_nama=$ds->nama;
+        }
+
         data_warga::where('id',$id)
             ->update([
                 'nik'=>$request->nik,
                 'nama'=>$request->nama,
                 'alamat'=>$request->alamat,
                 'jk'=>$request->jk,
+                'rw_id'=>$request->rw_id,
+                'dusun_id'=>$dusun_id,
+                'dusun_nama'=>$dusun_nama,
                 'hp'=>$request->hp
             ]);
             return redirect('/admin/datawarga')->with('status','Data berhasil diupdate!');

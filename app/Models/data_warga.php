@@ -15,6 +15,10 @@ class data_warga extends Model
         'nama',
         'alamat',
         'jk',
+        'dusun_id',
+        'dusun_nama',
+        'rw_id',
+        'rw_nama',
         'hp'
     ];
 }
