@@ -1,6 +1,6 @@
 @extends('admin.main')
 
-@section('title','Kriteria')
+@section('title','Edit')
 
 @section('csshere')
 <!-- Data Table Css -->
@@ -19,7 +19,7 @@
 @section('headernav')
 
 {{-- {{dd($kriterias)}} --}}
-@foreach ($kriterias as $kriteria)
+@foreach ($kuota_rw as $data)
 @endforeach
 
 {{-- {{dd($kriteria)}} --}}
@@ -29,7 +29,6 @@
             <div class="page-header-title">
                 <div class="d-inline">
                     <h4>@yield('title')</h4>
-                    <span>Halaman Mastering @yield('title') </span>
                 </div>
             </div>
         </div>
@@ -70,57 +69,45 @@
     <div class="card">
         <div class="card-block">
             <div class="card-body">
-                <form action="/admin/dataproses/{{ $th->id }}/kriteria/{{$kriteria->id}}" method="post">
+                <form action="/rw/dataproses/{{ $th->id }}/kuota/{{$data->id}}/update" method="post">
                     @method('put')
                     @csrf
-                    <h5>Edit @yield('title')</h5>
+                    <h5> 
+                        <?php
+                        $caridusuns = $caridusun = DB::table('dusun')
+                            ->where('id', '=', $data->dusun_id)
+                            ->get();
+                        ?>  
+                        @foreach ($caridusuns as $item)
+                           Dusun {{ $item->nama }}
+                        @endforeach
+
+                        
+                        <?php
+                        $carirw = $caridusun = DB::table('rw')
+                            ->where('id', '=', $data->rw_id)
+                            ->get();
+                        ?>  
+                        @foreach ($carirw as $item)
+                           {{ $item->nama }}
+                        @endforeach
+
+                    </h5>
                     <span>&nbsp; </span>
                     <div class="pl-lg-4">
                         <div class="row">
                             <div class="col-lg-6">
                                 <div class="form-group">
-                                    <label class="form-control-label" for="input-nama">Nama Kriteria (*</label>
-                                    <input type="text" name="nama" id="input-nama"
-                                        class="form-control form-control-alternative  @error('nama') is-invalid @enderror"
-                                        placeholder="Contoh : Tanggungan Keluarga "  value="{{$kriteria->nama}}"  required>
-                                    @error('nama')<div class="invalid-feedback"> {{$message}}</div>
+                                    <label class="form-control-label" for="input-total">Kuota (*</label>
+                                    <input type="text" name="total" id="input-total"
+                                        class="form-control form-control-alternative  @error('total') is-invalid @enderror"
+                                        value="{{$data->total}}"  required>
+                                    @error('total')<div class="invalid-feedback"> {{$message}}</div>
                                     @enderror
                                 </div>
                             </div>
 
 
-                            <div class="col-lg-6">
-                                <div class="form-group">
-                                    <label class="form-control-label" for="input-telp">nilai *)</label>
-                                    <input type="number" name="nilai" id="input-telp"
-                                        class="form-control form-control-alternative  @error('nilai') is-invalid @enderror"
-                                        placeholder="Contoh : 5 "  value="{{$kriteria->nilai}}"  required>
-                                    @error('nilai')<div class="invalid-feedback"> {{$message}}</div>
-                                    @enderror
-                                </div>
-                            </div>
-
-
-                            <div class="col-lg-6 col-sm-6 col-xl-6 m-b-30">
-                                <label class="form-control-label" for="input-status">Pilih Tipe (*</label>
-                                <select name="tipekriteria" id="input-status"
-                                    class="form-control form-control-info  @error('status') is-invalid @enderror"
-                                    required>
-                                    
-                                  <option >{{ $kriteria->tipekriteria }}</option>
-                                  <option >Dinamis</option>
-                                  <option >Fixed</option>
-                               
-                                </select> @error('status')<div class="invalid-feedback"> {{$message}}
-                                </div>
-                                @enderror
-                            </div>
-
-                            <div class="col-lg-6 col-sm-6 col-xl-6 m-b-30 mt-4">
-                                <label class="form-control-label" for="input-status"><strong>Dinamis</strong> -> Input data berbentuk Real contoh : Data Penghasilan berupa Rp.500.000,00</label>
-                                <label class="form-control-label" for="input-status"><strong>Fixed</strong> -> Input data berbentuk combobox contoh : Data Tempat tinggal berupa pilihan 1. Milik pribadi 2. Keluarga dst</label>
-                                
-                            </div>
 
 
 

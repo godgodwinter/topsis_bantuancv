@@ -1,6 +1,6 @@
 @extends('admin.main')
 
-@section('title','Data Warga')
+@section('title','KUOTA')
 
 @section('csshere')
 <!-- Data Table Css -->
@@ -24,7 +24,7 @@
             <div class="page-header-title">
                 <div class="d-inline">
                     <h4>@yield('title')</h4>
-                    <span>Pilih @yield('title')</span>
+                    <span>Halaman Mastering @yield('title')</span>
                 </div>
             </div>
         </div>
@@ -32,7 +32,7 @@
             <div class="page-header-breadcrumb">
                 <ul class="breadcrumb-title">
                     <li class="breadcrumb-item">
-                        <a href="#"> <i class="feather icon-home"></i> </a>
+                        <a href="index.html"> <i class="feather icon-home"></i> </a>
                     </li>
                     <li class="breadcrumb-item"><a href="#!">@yield('title')</a> </li>
                 </ul>
@@ -55,13 +55,14 @@
 
 @section('container')
 
-@foreach ($th_penerimaans as $th_penerimaan)
+@foreach ($th_penerimaans as $th)
 @endforeach
 <!-- Section start -->
 <div class="page-body">
     <!-- DOM/Jquery table start -->
     <div class="card">
         <div class="card-header">
+            <h5>Data @yield('title') Tahun Penerimaan {{ $th->tahun }}</h5>
         </div>
         <div class="card-block">
             <div class="table-responsive dt-responsive">
@@ -69,59 +70,46 @@
                     <thead>
                         <tr>
                             <th>No</th>
-                            <th>NIK</th>
-                            <th>Nama</th>
-                            <th>Alamat</th>
-                            <th>Jenis Kelamin</th>
-                            <th>No Telp</th>
-                            <th>Wilayah</th>
+                            <th>Nama Dusun</th>
+                            <th>RW</th>
+                            <th>Kuota</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($datas as $data)
+                        @foreach ($kuota_rw as $data)
 
 
                         <tr>
-                            <td>{{ ($loop->index)+1 }} </td>
-                            <td>{{$data->nik}}</td>
-                            <td>{{$data->nama}}</td>
-                            <td>{{$data->alamat}}</td>
-                            <td>{{$data->jk}}</td>
-                            <td>{{$data->hp}}</td>
+                            <td width="5%">{{ ($loop->index)+1 }} </td>
                             <td>
+                                
                                 <?php
                                 $caridusuns = $caridusun = DB::table('dusun')
                                     ->where('id', '=', $data->dusun_id)
                                     ->get();
                                 ?>  
-
+                                @foreach ($caridusuns as $item)
+                                   Dusun {{ $item->nama }}
+                                @endforeach
+                                
+                            </td>
+                            <td>
                                 <?php
-                                $carirw = $carirw = DB::table('rw')
+                                $carirw = $caridusun = DB::table('rw')
                                     ->where('id', '=', $data->rw_id)
                                     ->get();
                                 ?>  
-                                @foreach ($caridusuns as $ds)
-                                       Dusun {{ $ds->nama }} - 
-                                @endforeach
-
-                                @foreach ($carirw as $rw)
-                                       {{ $rw->nama }} 
+                                @foreach ($carirw as $item)
+                                   {{ $item->nama }}
                                 @endforeach
                             </td>
+                            <td>{{$data->total}}</td>
 
-                            <td>
-
-                                            <form action="/admin/dataproses/addwarga/store " method="post">
-                                                @csrf
-
-                                    <input type="hidden" name="th_penerimaan_id" value="{{ $th_penerimaan->id }}">
-
-                                    <input type="hidden" name="nik" value="{{ $data->nik }}">
-                                    <button class="btn btn-warning btn-outline-warning"
-                                        onclick="return  confirm('Anda menambahkan data ini? Y/N')"><span
-                                            class="pcoded-micon"> <i class="feather icon-edit"></i>Tambahkan</span></button>
-                                </form>
+                            <td width="5%">
+                                <a class="btn btn-warning btn-sm  btn-outline-warning"
+                                    href="/rw/dataproses/{{$th->id}}/kuota/{{$data->id}}/edit"><span class="pcoded-micon"> <i
+                                            class="feather icon-edit"></i></span></a>
                             </td>
                         </tr>
                         @endforeach
@@ -129,12 +117,10 @@
                     <tfoot>
                         <tr>
                             <th>No</th>
-                            <th>NIK</th>
-                            <th>Nama</th>
-                            <th>Alamat</th>
-                            <th>Jenis Kelamin</th>
-                            <th>No Telp</th>
-                            <th>Wilayah</th>
+
+                            <th>Nama Kriteria</th>
+                            <th>Nilai</th>
+                            <th>Tipe</th>
                             <th>Aksi</th>
                         </tr>
                     </tfoot>
@@ -143,7 +129,6 @@
         </div>
     </div>
     <!-- DOM/Jquery table end -->
-
 </div>
 <!-- Section end -->
 

@@ -83,6 +83,10 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function() {
 
     Route::resource('admin/dataproses','App\Http\Controllers\AdminDataprosesController');
 
+
+    Route::resource('rw/dataproses','App\Http\Controllers\rwdataprosescontroller');
+
+
     Route::get('admin/dataproses/{id}/addwarga', 'App\Http\Controllers\AdminDataprosesController@addwarga');
 
     Route::post('admin/dataproses/addwarga/store', 'App\Http\Controllers\AdminDataprosesController@addwargastore');
@@ -121,6 +125,18 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function() {
     //menu rw
     Route::resource('rw/datawarga','App\Http\Controllers\rwdatawargacontroller');
     Route::resource('rw/bantuan','App\Http\Controllers\rwbantuancontroller');
+
+
+    Route::get('rw/dataproses/{id}/kuota', 'App\Http\Controllers\rwdataprosescontroller@kuotaindex');
+    Route::get('rw/dataproses/{th}/kuota/{id}/edit', 'App\Http\Controllers\rwdataprosescontroller@kuotaedit');
+    Route::put('rw/dataproses/{th}/kuota/{id}/update', 'App\Http\Controllers\rwdataprosescontroller@kuotaupdate');
+
+
+    Route::post('rw/dataproses/isidata/add', 'App\Http\Controllers\rwdataprosescontroller@addisidata');
+
+    Route::get('rw/dataproses/{id}/addwarga', 'App\Http\Controllers\rwdataprosescontroller@addwarga');
+
+    Route::post('rw/dataproses/addwarga/store', 'App\Http\Controllers\rwdataprosescontroller@addwargastore');
 
     // Route::get('/kriteria', function () {
     //     return view('admin.kriteria.index');

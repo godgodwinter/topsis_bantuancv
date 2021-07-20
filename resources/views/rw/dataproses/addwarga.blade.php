@@ -112,7 +112,7 @@
 
                             <td>
 
-                                            <form action="/admin/dataproses/addwarga/store " method="post">
+                                            <form action="/rw/dataproses/addwarga/store " method="post">
                                                 @csrf
 
                                     <input type="hidden" name="th_penerimaan_id" value="{{ $th_penerimaan->id }}">

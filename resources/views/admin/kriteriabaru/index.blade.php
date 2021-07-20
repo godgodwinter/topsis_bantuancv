@@ -144,7 +144,7 @@
                             <div class="col-lg-6">
                                 <div class="form-group">
                                     <label class="form-control-label" for="input-telp">nilai *)</label>
-                                    <input type="text" name="nilai" id="input-telp"
+                                    <input type="number" name="nilai" id="input-telp"
                                         class="form-control form-control-alternative  @error('nilai') is-invalid @enderror"
                                         placeholder="Contoh : 5 " value="{{old('nilai')}}" required>
                                     @error('nilai')<div class="invalid-feedback"> {{$message}}</div>

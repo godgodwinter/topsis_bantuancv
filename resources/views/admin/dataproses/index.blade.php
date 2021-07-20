@@ -114,6 +114,7 @@ href="/admin/dataproses/{{ $th_penerimaan->id }}/topsis"><span class="pcoded-mic
                         <tr>
                             <th width="5%">No</th>
                             <th>NIK</th>
+                            <th>Wilayah</th>
                             @foreach($kriterias as $kriteria)
                                 <th>{{ $kriteria->nama }}</th>
                             @endforeach
@@ -138,6 +139,8 @@ href="/admin/dataproses/{{ $th_penerimaan->id }}/topsis"><span class="pcoded-mic
                                                 foreach ($datwargas as $ambildw) {
                                                     // dd($ambil);
                                                     // $sr_nilai=$ambil->nilai1;
+                                                    $dusun_id=$ambildw->dusun_id;
+                                                    $rw_id=$ambildw->rw_id;
                                                     ?>
 
                                               {{ $ambildw->nama }}
@@ -145,6 +148,29 @@ href="/admin/dataproses/{{ $th_penerimaan->id }}/topsis"><span class="pcoded-mic
                                                 }
                                     ?>
 
+                                </td>
+                                <td>
+
+                                
+
+                                    <?php
+                                    $caridusuns= DB::table('dusun')
+                                        ->where('id', '=', $dusun_id)
+                                        ->get();
+                                    ?>  
+    
+                                    <?php
+                                    $carirw = $carirw = DB::table('rw')
+                                        ->where('id', '=', $rw_id)
+                                        ->get();
+                                    ?>  
+                                    @foreach ($caridusuns as $ds)
+                                           Dusun {{ $ds->nama }} - 
+                                    @endforeach
+    
+                                    @foreach ($carirw as $rw)
+                                           {{ $rw->nama }} 
+                                    @endforeach
                                 </td>
                                 {{-- data warga diulang perkriteria --}}
                                 @foreach($kriterias as $kriteria)
@@ -334,6 +360,7 @@ if($cari<1){
     <tr>
         <th>No</th>
         <th>NIK</th>
+        <th>Wilayah</th>
         @foreach($kriterias as $kriteria)
             <th>{{ $kriteria->nama }}</th>
         @endforeach

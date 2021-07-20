@@ -104,7 +104,7 @@
                                 @endforeach
 
                                 @foreach ($carirw as $rw)
-                                       Dusun {{ $rw->nama }} 
+                                       {{ $rw->nama }} 
                                 @endforeach
                             </td>
 

@@ -87,20 +87,20 @@
                                 <?php if(($data->status)=="Proses"){
                                     ?>
                                      <a class="btn btn-info btn-outline-info"
-                                     href="/admin/dataproses/{{$data->id}}"><span class="pcoded-micon"> <i
+                                     href="/rw/dataproses/{{$data->id}}"><span class="pcoded-micon"> <i
                                              class="feather icon-edit"></i>Detail Proses</span></a>
 
                                     <?php
                                 }elseif(($data->status)=="Selesai"){
                                         ?>
                                         <a class="btn btn-info btn-outline-info"
-                                        href="/admin/dataproses/{{$data->id}}/hasil"><span class="pcoded-micon"> <i
+                                        href="/rw/dataproses/{{$data->id}}/hasil"><span class="pcoded-micon"> <i
                                                 class="feather icon-edit"></i>Hasil dan Grafik</span></a>
                                         <?php
                                 }else{
                                     ?>
                                      <a class="btn btn-warning btn-outline-warning"
-                                     href="/admin/bantuan/{{$data->id}}/edit"><span class="pcoded-micon"> <i
+                                     href="/rw/bantuan/{{$data->id}}/edit"><span class="pcoded-micon"> <i
                                              class="feather icon-edit"></i></span></a>
                                     <?php
                                 }
