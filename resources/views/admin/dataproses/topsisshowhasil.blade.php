@@ -78,7 +78,18 @@
     <div class="card">
 
         <div class="card-header">
-            <a href="cetak" class="btn btn-primary" target="_blank">CETAK PDF</a>
+            @php
+                if($th_penerimaan->verif==='Terverifikasi'){
+            @endphp
+             <a href="cetak" class="btn btn-primary" target="_blank">CETAK PDF</a>
+            @php
+                }else{
+            @endphp
+             <a href="#" class="btn btn-secondary" >CETAK PDF</a> <p><i>Tunggu Verifikasi Kepala Desa</i></p>
+
+            @php
+                }
+            @endphp
         </div>
         <div class="card-block">
             <div class="table-responsive dt-responsive">
