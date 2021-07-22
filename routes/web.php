@@ -86,6 +86,8 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function() {
 
     Route::resource('rw/dataproses','App\Http\Controllers\rwdataprosescontroller');
 
+    Route::resource('dusun/dataproses','App\Http\Controllers\dusundataprosescontroller');
+
 
     Route::get('admin/dataproses/{id}/addwarga', 'App\Http\Controllers\AdminDataprosesController@addwarga');
 
@@ -137,6 +139,23 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function() {
     Route::get('rw/dataproses/{id}/addwarga', 'App\Http\Controllers\rwdataprosescontroller@addwarga');
 
     Route::post('rw/dataproses/addwarga/store', 'App\Http\Controllers\rwdataprosescontroller@addwargastore');
+
+
+    //menu dusun
+    Route::resource('dusun/datawarga','App\Http\Controllers\dusundatawargacontroller');
+    Route::resource('dusun/bantuan','App\Http\Controllers\dusunbantuancontroller');
+
+
+    Route::get('dusun/dataproses/{id}/kuota', 'App\Http\Controllers\dusundataprosescontroller@kuotaindex');
+    Route::get('dusun/dataproses/{th}/kuota/{id}/edit', 'App\Http\Controllers\dusundataprosescontroller@kuotaedit');
+    Route::put('dusun/dataproses/{th}/kuota/{id}/update', 'App\Http\Controllers\dusundataprosescontroller@kuotaupdate');
+
+
+    Route::post('dusun/dataproses/isidata/add', 'App\Http\Controllers\dusundataprosescontroller@addisidata');
+
+    Route::get('dusun/dataproses/{id}/addwarga', 'App\Http\Controllers\dusundataprosescontroller@addwarga');
+
+    Route::post('dusun/dataproses/addwarga/store', 'App\Http\Controllers\dusundataprosescontroller@addwargastore');
 
     // Route::get('/kriteria', function () {
     //     return view('admin.kriteria.index');
