@@ -118,7 +118,7 @@ class AdmindatawilayahController extends Controller
     public function detail($id)
     {
         $dusun = DB::table('dusun')->where('id',$id)->get();
-        $users = DB::table('users')->where('dusunid',$id)->get();
+        $users = DB::table('users')->where('dusunid',$id)->get()->where('tipeuser','dusun');
         $datas = DB::table('rw')->where('dusun_id',$id)->get();
         return view('admin.datawilayah.detail',compact('datas','dusun','users'));
     }

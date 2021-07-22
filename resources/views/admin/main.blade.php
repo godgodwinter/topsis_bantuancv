@@ -186,9 +186,15 @@
         @endphp
 
         <li class="">
-                                    <a href="{{url('/')}}/admin/datawarga">
+                                    <a href="{{url('/')}}/dusun/datawarga">
                                         <span class="pcoded-micon"><i class="feather icon-users"></i></span>
                                         <span class="pcoded-mtext">Data Warga</span>
+                                    </a>
+                                </li>
+        <li class="">
+                                    <a href="{{url('/')}}/dusun/bantuan">
+                                        <span class="pcoded-micon"><i class="feather icon-users"></i></span>
+                                        <span class="pcoded-mtext">Bantuan</span>
                                     </a>
                                 </li>
         @php
