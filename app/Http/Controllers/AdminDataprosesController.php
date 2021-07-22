@@ -426,7 +426,12 @@ public function topsisshowhasil($id)
     //         ->setDimensions(1000,500)
     //         ->setResponsive(false);
 // dd($TopsisChart);
-    return view('admin.dataproses.topsisshowhasil',compact('kriterias','th_penerimaans','data_wargas','data_prosess'));
+
+$kuota_rw = DB::table('kuota_rw')
+->where('th_penerimaan_id',$id)
+->get();
+
+    return view('admin.dataproses.topsisshowhasil',compact('kriterias','th_penerimaans','data_wargas','data_prosess','kuota_rw'));
 }
 
 
@@ -441,7 +446,12 @@ public function cetak($id)
     $kriterias=Kriteria::all();
     $data_wargas=data_warga::all();
 
-    $pdf = PDF::loadview('admin.dataproses.rekap_hasil',['data_prosess'=>$data_prosess],compact('th_penerimaans'));
+    $kuota_rw = DB::table('kuota_rw')
+    ->where('th_penerimaan_id',$id)
+    ->get();
+
+
+    $pdf = PDF::loadview('admin.dataproses.rekap_hasil',['data_prosess'=>$data_prosess],compact('th_penerimaans','kuota_rw'));
     return $pdf->download('laporan-proses-pdf');
 }
 
@@ -465,8 +475,12 @@ public function endtopsis($id)
     $kriterias=Kriteria::all();
     $data_wargas=data_warga::all();
 
+    $kuota_rw = DB::table('kuota_rw')
+    ->where('th_penerimaan_id',$id)
+    ->get();
+
     // dd($kriterias);
-    return view('admin.dataproses.topsisshowhasil',compact('kriterias','th_penerimaans','data_wargas','data_prosess'));
+    return view('admin.dataproses.topsisshowhasil',compact('kriterias','th_penerimaans','data_wargas','data_prosess','kuota_rw'));
 }
 
 public function kriteriaindex($id)

@@ -96,16 +96,15 @@
                 <table id="dom-jqry" class="table table-striped table-bordered nowrap">
                     <thead>
                         <tr>
-                            <th width="5%" class="text-center">No</th>
-                            <th  class="text-center">NIK</th>
-                            <th class="text-center">Wilayah</th>
-                            <th class="text-center">Nilai Preferensi</th>
+                            <th>No</th>
+                            <th>NIK</th>
+                            <th>Wilayah</th>
+                            <th>Nilai Preferensi</th>
 
                         </tr>
                     </thead>
                     <tbody>
                         <?php
-                        $nomer=1;
 
                         // $jsonhasil=json_encode($hasiltopsis);
 // // dd($hasiltopsis);
@@ -139,10 +138,10 @@ $kuota=$kr->total
     @foreach($datasakhir as $da)
 
     <tr>
-        <td class="text-center"> {{$nomer}} </td>
+        <td> - </td>
         <td>{{ $da->nik }} - {{ $da->nama }}</td>
     
-        <td  class="text-center">
+        <td>
             <?php
             $caridusuns= DB::table('dusun')
                 ->where('id', '=', $da->dusun_id)
@@ -162,14 +161,12 @@ $kuota=$kr->total
                    {{ $rw->nama }} 
             @endforeach
         </td>
-        <td  class="text-center">{{ $da->hasil_topsis }}</td>
+        <td>{{ $da->hasil_topsis }}</td>
     
 
     </tr>
 
-@php
-    $nomer++;
-@endphp
+
     @endforeach
 
     
@@ -190,13 +187,73 @@ $kuota=$kr->total
 
                             ?>
                             
+                        {{-- data warga --}}
+                        @foreach($th_penerimaans as $th_penerimaan)
+@endforeach
+                        <?php
+$kuota=$th_penerimaan->kuota;
+    $datahasiltopsiss = DB::table('data_proses')->where('th_penerimaan_id',$th_penerimaan->id)->orderBy('hasil_topsis', 'desc')->skip(0)->take($kuota)->get();
+                        ?>
+                        @foreach($datahasiltopsiss as $data_proses)
+                            <tr>
+                                <td>{{ ($loop->index)+1 }} </td>
+                                <td>{{ $data_proses->nik }} -
+                                    <?php
+                                    $datwargas = DB::select('select * from data_warga where nik = ?', array($data_proses->nik));
+                                                foreach ($datwargas as $ambildw) {
+                                                    // dd($ambil);
+                                                    // $sr_nilai=$ambil->nilai1;
+                                                    $dusun_id=$ambildw->dusun_id;
+                                                    $rw_id=$ambildw->rw_id;
+                                                    ?>
+
+                                              {{ $ambildw->nama }}
+                                                    <?php
+                                                }
+                                    ?>
+
+                                </td>
+                                <td>
+
+                                
+
+                                    <?php
+                                    $caridusuns= DB::table('dusun')
+                                        ->where('id', '=', $dusun_id)
+                                        ->get();
+                                    ?>  
+    
+                                    <?php
+                                    $carirw = $carirw = DB::table('rw')
+                                        ->where('id', '=', $rw_id)
+                                        ->get();
+                                    ?>  
+                                    @foreach ($caridusuns as $ds)
+                                           Dusun {{ $ds->nama }} - 
+                                    @endforeach
+    
+                                    @foreach ($carirw as $rw)
+                                           {{ $rw->nama }} 
+                                    @endforeach
+                                </td>
+
+
+<td>
+
+   {{ $data_proses->hasil_topsis }}
+</td>
+
+</tr>
+
+@endforeach
+
 </tbody>
 <tfoot>
     <tr>
-        <th class="text-center">No</th>
-        <th class="text-center">NIK</th>
-        <th class="text-center">Wilayah</th>
-        <th class="text-center">Nilai Preferensi</th>
+        <th>No</th>
+        <th>NIK</th>
+        <th>Wilayah</th>
+        <th>Nilai Preferensi</th>
     </tr>
 
 </tfoot>
